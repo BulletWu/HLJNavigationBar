@@ -8,7 +8,6 @@
 
 #import "UINavigationBar+HLJNavigationItem.h"
 #import <objc/runtime.h>
-#import "Masonry.h"
 #import "UINavigationItem+HLJNavigationBar.h"
 
 static void ExchangedMethod(SEL originalSelector, SEL swizzledSelector, Class class) {
