@@ -1,0 +1,6 @@
+source 'https://github.com/CocoaPods/Specs.git'
+
+target 'HLJNavigationBar_Example' do
+  pod 'HLJNavigationBar', :path => '../'
+  pod 'Masonry'
+end
