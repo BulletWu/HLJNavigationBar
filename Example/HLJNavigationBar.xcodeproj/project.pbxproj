@@ -11,6 +11,7 @@
 		4C2CF1C51F5EAFFF005DF8D2 /* UINavigationItem+HLJNavigationBar.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C2CF1C41F5EAFFF005DF8D2 /* UINavigationItem+HLJNavigationBar.m */; };
 		4C2EB8C91F5D24070031FFBF /* HLJBackActionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C2EB8C81F5D24070031FFBF /* HLJBackActionViewController.m */; };
 		4C2EB8CC1F5D26160031FFBF /* HLJAddChildContainerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C2EB8CB1F5D26160031FFBF /* HLJAddChildContainerViewController.m */; };
+		4C3DF8DA1F6BB7A8007D2618 /* UINavigationBar+HLJBackgroundAlpha.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C3DF8D91F6BB7A7007D2618 /* UINavigationBar+HLJBackgroundAlpha.m */; };
 		4C4C247D1F564543000309D9 /* HLJTestViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C4C247C1F564543000309D9 /* HLJTestViewController.m */; };
 		4C4C24801F5647EC000309D9 /* HLJHiddenNavBarViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C4C247F1F5647EC000309D9 /* HLJHiddenNavBarViewController.m */; };
 		4C4C24861F5656B0000309D9 /* HLJShadowImageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C4C24851F5656B0000309D9 /* HLJShadowImageViewController.m */; };
@@ -70,6 +71,8 @@
 		4C2EB8C81F5D24070031FFBF /* HLJBackActionViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HLJBackActionViewController.m; sourceTree = "<group>"; };
 		4C2EB8CA1F5D26160031FFBF /* HLJAddChildContainerViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HLJAddChildContainerViewController.h; sourceTree = "<group>"; };
 		4C2EB8CB1F5D26160031FFBF /* HLJAddChildContainerViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HLJAddChildContainerViewController.m; sourceTree = "<group>"; };
+		4C3DF8D81F6BB7A7007D2618 /* UINavigationBar+HLJBackgroundAlpha.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "UINavigationBar+HLJBackgroundAlpha.h"; sourceTree = "<group>"; };
+		4C3DF8D91F6BB7A7007D2618 /* UINavigationBar+HLJBackgroundAlpha.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "UINavigationBar+HLJBackgroundAlpha.m"; sourceTree = "<group>"; };
 		4C4C247B1F564543000309D9 /* HLJTestViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HLJTestViewController.h; sourceTree = "<group>"; };
 		4C4C247C1F564543000309D9 /* HLJTestViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HLJTestViewController.m; sourceTree = "<group>"; };
 		4C4C247E1F5647EC000309D9 /* HLJHiddenNavBarViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HLJHiddenNavBarViewController.h; sourceTree = "<group>"; };
@@ -167,6 +170,8 @@
 				4C2EB8BC1F5CE7F20031FFBF /* UIColor+HLJNavBarExtend.m */,
 				4CC4A6C21F56B4D3006F9E59 /* UINavigationBar+HLJNavigationItem.h */,
 				4CC4A6C31F56B4D3006F9E59 /* UINavigationBar+HLJNavigationItem.m */,
+				4C3DF8D81F6BB7A7007D2618 /* UINavigationBar+HLJBackgroundAlpha.h */,
+				4C3DF8D91F6BB7A7007D2618 /* UINavigationBar+HLJBackgroundAlpha.m */,
 				4CC4A6C51F56BB5B006F9E59 /* UIViewController+HLJBackHandlerProtocol.h */,
 				4CC4A6C61F56BB5B006F9E59 /* UIViewController+HLJBackHandlerProtocol.m */,
 				4C2EB8BE1F5CF2FB0031FFBF /* UIBarButtonItem+HLJExtend.h */,
@@ -467,6 +472,7 @@
 				4C2CF1C51F5EAFFF005DF8D2 /* UINavigationItem+HLJNavigationBar.m in Sources */,
 				4CE9FCD11F6B6E93004F10A0 /* HLJTableViewController.m in Sources */,
 				4C2EB8CC1F5D26160031FFBF /* HLJAddChildContainerViewController.m in Sources */,
+				4C3DF8DA1F6BB7A8007D2618 /* UINavigationBar+HLJBackgroundAlpha.m in Sources */,
 				4CE9FCCB1F6B6E07004F10A0 /* HLJSlidePageView.m in Sources */,
 				4CC4A6991F568BB7006F9E59 /* HLJColorGradientViewController.m in Sources */,
 				4C886D341F692087009C091D /* UIView+HLJIntrinsicContentSize.m in Sources */,
