@@ -18,6 +18,9 @@
 		4C886D341F692087009C091D /* UIView+HLJIntrinsicContentSize.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C886D331F692087009C091D /* UIView+HLJIntrinsicContentSize.m */; };
 		4CC4A6961F568B12006F9E59 /* HLJNavBarTitleViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CC4A6951F568B12006F9E59 /* HLJNavBarTitleViewController.m */; };
 		4CC4A6991F568BB7006F9E59 /* HLJColorGradientViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CC4A6981F568BB7006F9E59 /* HLJColorGradientViewController.m */; };
+		4CE9FCCB1F6B6E07004F10A0 /* HLJSlidePageView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CE9FCCA1F6B6E07004F10A0 /* HLJSlidePageView.m */; };
+		4CE9FCCE1F6B6E46004F10A0 /* HLJSlidePageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CE9FCCD1F6B6E46004F10A0 /* HLJSlidePageViewController.m */; };
+		4CE9FCD11F6B6E93004F10A0 /* HLJTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CE9FCCF1F6B6E92004F10A0 /* HLJTableViewController.m */; };
 		6003F58E195388D20070C39A /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6003F58D195388D20070C39A /* Foundation.framework */; };
 		6003F590195388D20070C39A /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6003F58F195388D20070C39A /* CoreGraphics.framework */; };
 		6003F592195388D20070C39A /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6003F591195388D20070C39A /* UIKit.framework */; };
@@ -87,6 +90,12 @@
 		4CC4A6C31F56B4D3006F9E59 /* UINavigationBar+HLJNavigationItem.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "UINavigationBar+HLJNavigationItem.m"; sourceTree = "<group>"; };
 		4CC4A6C51F56BB5B006F9E59 /* UIViewController+HLJBackHandlerProtocol.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "UIViewController+HLJBackHandlerProtocol.h"; sourceTree = "<group>"; };
 		4CC4A6C61F56BB5B006F9E59 /* UIViewController+HLJBackHandlerProtocol.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "UIViewController+HLJBackHandlerProtocol.m"; sourceTree = "<group>"; };
+		4CE9FCC91F6B6E07004F10A0 /* HLJSlidePageView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HLJSlidePageView.h; sourceTree = "<group>"; };
+		4CE9FCCA1F6B6E07004F10A0 /* HLJSlidePageView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HLJSlidePageView.m; sourceTree = "<group>"; };
+		4CE9FCCC1F6B6E46004F10A0 /* HLJSlidePageViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = HLJSlidePageViewController.h; path = ../../../HLJPod/HLJSlidePageView/Example/HLJSlidePageView/HLJSlidePageViewController.h; sourceTree = "<group>"; };
+		4CE9FCCD1F6B6E46004F10A0 /* HLJSlidePageViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = HLJSlidePageViewController.m; path = ../../../HLJPod/HLJSlidePageView/Example/HLJSlidePageView/HLJSlidePageViewController.m; sourceTree = "<group>"; };
+		4CE9FCCF1F6B6E92004F10A0 /* HLJTableViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HLJTableViewController.m; sourceTree = "<group>"; };
+		4CE9FCD01F6B6E93004F10A0 /* HLJTableViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HLJTableViewController.h; sourceTree = "<group>"; };
 		6003F58A195388D20070C39A /* HLJNavigationBar_Example.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = HLJNavigationBar_Example.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		6003F58D195388D20070C39A /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		6003F58F195388D20070C39A /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -211,6 +220,8 @@
 			children = (
 				6003F59C195388D20070C39A /* AppDelegate.h */,
 				6003F59D195388D20070C39A /* AppDelegate.m */,
+				4CE9FCC91F6B6E07004F10A0 /* HLJSlidePageView.h */,
+				4CE9FCCA1F6B6E07004F10A0 /* HLJSlidePageView.m */,
 				4C886D321F692087009C091D /* UIView+HLJIntrinsicContentSize.h */,
 				4C886D331F692087009C091D /* UIView+HLJIntrinsicContentSize.m */,
 				4C4C247B1F564543000309D9 /* HLJTestViewController.h */,
@@ -229,6 +240,10 @@
 				4C2EB8C81F5D24070031FFBF /* HLJBackActionViewController.m */,
 				4C2EB8CA1F5D26160031FFBF /* HLJAddChildContainerViewController.h */,
 				4C2EB8CB1F5D26160031FFBF /* HLJAddChildContainerViewController.m */,
+				4CE9FCCC1F6B6E46004F10A0 /* HLJSlidePageViewController.h */,
+				4CE9FCCD1F6B6E46004F10A0 /* HLJSlidePageViewController.m */,
+				4CE9FCD01F6B6E93004F10A0 /* HLJTableViewController.h */,
+				4CE9FCCF1F6B6E92004F10A0 /* HLJTableViewController.m */,
 				873B8AEA1B1F5CCA007FD442 /* Main.storyboard */,
 				6003F5A5195388D20070C39A /* hljViewController.h */,
 				6003F5A6195388D20070C39A /* hljViewController.m */,
@@ -448,8 +463,11 @@
 				6003F5A7195388D20070C39A /* hljViewController.m in Sources */,
 				4C2EB8C91F5D24070031FFBF /* HLJBackActionViewController.m in Sources */,
 				4CC4A6961F568B12006F9E59 /* HLJNavBarTitleViewController.m in Sources */,
+				4CE9FCCE1F6B6E46004F10A0 /* HLJSlidePageViewController.m in Sources */,
 				4C2CF1C51F5EAFFF005DF8D2 /* UINavigationItem+HLJNavigationBar.m in Sources */,
+				4CE9FCD11F6B6E93004F10A0 /* HLJTableViewController.m in Sources */,
 				4C2EB8CC1F5D26160031FFBF /* HLJAddChildContainerViewController.m in Sources */,
+				4CE9FCCB1F6B6E07004F10A0 /* HLJSlidePageView.m in Sources */,
 				4CC4A6991F568BB7006F9E59 /* HLJColorGradientViewController.m in Sources */,
 				4C886D341F692087009C091D /* UIView+HLJIntrinsicContentSize.m in Sources */,
 				6003F59A195388D20070C39A /* main.m in Sources */,

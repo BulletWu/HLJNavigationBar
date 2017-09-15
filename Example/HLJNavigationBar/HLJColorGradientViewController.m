@@ -58,15 +58,19 @@ _Pragma("clang diagnostic pop") \
 //     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"按钮" style:UIBarButtonItemStyleDone target:self action:nil];
     
     //iOS11 发现这里如果用约束 一旦导航栏用有透明度的图片 侧滑返回 会影响前面一个页面的self.view的y坐标位置,
-    self.tableView.frame = CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height);
+//    self.tableView.frame = CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height);
+    adjustsScrollViewInsets_NO(self.tableView, self);
     [self.view addSubview:self.tableView];
-
-//    [self.tableView mas_makeConstraints:^(MASConstraintMaker *make) {
-//        make.edges.mas_equalTo(self.view);
-//    }];
-    self.tableView.contentInset = UIEdgeInsetsMake(-64, 0, 0, 0);
+    [self.tableView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.edges.mas_equalTo(self.view);
+    }];
+    
+//    self.tableView.contentInset = UIEdgeInsetsMake(-(44+[[UIApplication sharedApplication] statusBarFrame].size.height), 0, 0, 0);
     self.headView.frame = CGRectMake(0, 0, self.view.frame.size.width, 200.0);
     self.tableView.tableHeaderView = self.headView;
+    
+    [self.tableView layoutIfNeeded];
+    [self updateNavBarStyle];
 }
 
 #pragma mark tableviewDelegate & tableViewDataSource
@@ -98,7 +102,7 @@ _Pragma("clang diagnostic pop") \
 
 - (void)updateNavBarStyle {
     CGFloat height = self.tableView.tableHeaderView.frame.size.height;
-    CGFloat percentComplete = (height - (self.tableView.contentOffset.y - 64))/height;
+    CGFloat percentComplete = (height - (self.tableView.contentOffset.y))/height;
     if (percentComplete <= 0) {
         percentComplete = 0;
     }

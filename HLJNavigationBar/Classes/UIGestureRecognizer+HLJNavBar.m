@@ -71,11 +71,8 @@ static void ExchangedMethod(SEL originalSelector, SEL swizzledSelector, Class cl
 
 - (void)hlj_HLJNavBar_navSetDelegate:(id<UIGestureRecognizerDelegate>)delegate {
     if ([NSStringFromClass([delegate class]) isEqualToString:@"_UINavigationInteractiveTransition"]) {
-        if (delegate == nil) {
-            delegate = self;
-        }
-        [self hlj_HLJNavBar_navSetDelegate:self];
-        self.hlj_gestureRecognizerDelegate = delegate != self ? delegate :nil;
+        [self hlj_HLJNavBar_navSetDelegate:delegate?self:nil];
+        self.hlj_gestureRecognizerDelegate = delegate != self ? delegate : nil;
     }else{
         [self hlj_HLJNavBar_navSetDelegate:delegate];
     }

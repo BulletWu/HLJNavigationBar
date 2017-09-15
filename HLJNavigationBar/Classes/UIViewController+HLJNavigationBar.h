@@ -8,6 +8,21 @@
 
 #import <UIKit/UIKit.h>
 
+
+#define  adjustsScrollViewInsets_NO(scrollView,vc)\
+do { \
+_Pragma("clang diagnostic push") \
+_Pragma("clang diagnostic ignored \"-Warc-performSelector-leaks\"") \
+if ([UIScrollView instancesRespondToSelector:NSSelectorFromString(@"setContentInsetAdjustmentBehavior:")]) {\
+[scrollView   performSelector:NSSelectorFromString(@"setContentInsetAdjustmentBehavior:") withObject:@(2)];\
+} else {\
+vc.automaticallyAdjustsScrollViewInsets = NO;\
+}\
+_Pragma("clang diagnostic pop") \
+} while (0)
+
+
+
 @interface UIViewController (HLJNavigationBar)
 
 @property (nonatomic ,assign) BOOL hlj_prefersNavigationBarHidden;//隐藏导航栏

@@ -15,8 +15,9 @@
 #import "HLJColorGradientViewController.h"
 #import "HLJBackActionViewController.h"
 #import "HLJAddChildContainerViewController.h"
+#import "HLJSlidePageViewController.h"
 
-#define kTableArray  @[@"hidden导航栏",@"导航栏分割线变色",@"导航栏背景透明",@"导航栏titleView自适应",@"颜色渐变",@"返回过程中的一些事件监听",@"addChildViewController对导航栏的影响",@"访问系统相册"]
+#define kTableArray  @[@"hidden导航栏",@"导航栏分割线变色",@"导航栏背景透明",@"导航栏titleView自适应",@"颜色渐变",@"返回过程中的一些事件监听",@"addChildViewController对导航栏的影响",@"访问系统相册",@"悬停控件"]
 
 @interface HLJTestViewController ()<UITableViewDelegate,UITableViewDataSource>
 
@@ -101,6 +102,9 @@
         [pickerViewController setAllowsEditing:YES];// 设置是否可以管理已经存在的图片或者视频
         [self.navigationController presentViewController:pickerViewController animated:YES completion:^{
         }];
+    }else if (indexPath.row == 8) {
+        HLJSlidePageViewController *viewController = [[HLJSlidePageViewController alloc] init];
+        [self.navigationController pushViewController:viewController animated:YES];
     }
 }
 

@@ -13,8 +13,6 @@
 
 @interface HLJAddChildContainerViewController ()<UINavigationControllerDelegate>
 
-@property (nonatomic ,assign) BOOL appear;
-
 @end
 
 @implementation HLJAddChildContainerViewController
@@ -23,15 +21,16 @@
     [super viewDidLoad];
     self.view.backgroundColor = [UIColor whiteColor];
     
-    HLJColorGradientViewController *viewController = [[HLJColorGradientViewController alloc] init];
-    viewController.title = @"测试";
-    viewController.view.frame = self.view.bounds;
-    [self addChildViewController:viewController];
-    [self.view addSubview:viewController.view];
-    [self hlj_replaceNavigationItem:viewController.navigationItem];
-    self.appear = YES;
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.2 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        HLJColorGradientViewController *viewController = [[HLJColorGradientViewController alloc] init];
+        viewController.title = @"测试";
+        viewController.view.frame = self.view.bounds;
+        [self addChildViewController:viewController];
+        [self.view addSubview:viewController.view];
+        [self hlj_replaceNavigationItem:viewController.navigationItem];
+    });
+ 
 }
-
 
 
 @end

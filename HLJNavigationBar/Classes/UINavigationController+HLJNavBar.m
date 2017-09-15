@@ -98,7 +98,11 @@ typedef void (^HLJViewControllerWillAppearInjectBlock)(UIViewController *viewCon
 - (void)hlj_navBarViewDidLoad{
     [self hlj_navBarViewDidLoad];
     if (self.delegate != self) {
-        self.delegate = self.delegate;
+        if (self.delegate == nil) {
+            self.delegate = self;
+        }else {
+            self.delegate = self.delegate;
+        }
     }
 }
 
@@ -198,11 +202,8 @@ typedef void (^HLJViewControllerWillAppearInjectBlock)(UIViewController *viewCon
 }
 
 - (void)hlj_navSetDelegate:(id<UINavigationControllerDelegate>)delegate {
-    if (delegate == nil) {
-        delegate = self;
-    }
-    [self hlj_navSetDelegate:self];
-    self.navDelegate = delegate != self ? delegate :nil;
+    [self hlj_navSetDelegate:delegate?self:nil];
+    self.navDelegate = delegate != self ? delegate : nil;
 }
 
 #pragma mark - public methods
