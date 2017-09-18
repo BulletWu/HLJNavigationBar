@@ -30,14 +30,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.title = @"测试";
-//    self.extendedLayoutIncludesOpaqueBars = YES;
-//    if (@available(iOS 11.0, *)) {
-//        self.tableView.contentInsetAdjustmentBehavior = UIScrollViewContentInsetAdjustmentNever;
-//    } else {
-//        self.automaticallyAdjustsScrollViewInsets = NO;
-//    }
-//    
-//    self.tableView.translatesAutoresizingMaskIntoConstraints = YES;
+
     [self.view addSubview:self.tableView];
     [self.tableView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.edges.mas_equalTo(self.view);

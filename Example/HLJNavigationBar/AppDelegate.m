@@ -24,7 +24,7 @@
     [[UINavigationBar appearance] setHlj_backgroundColor:[UIColor redColor]];
     UIImage *image = [UIImage hlj_imageWithColor:[UINavigationBar appearance].hlj_backgroundColor];
     [[UINavigationBar appearance] setBackgroundImage:image forBarMetrics:UIBarMetricsDefault];
-    [[UINavigationBar appearance] setTranslucent:YES];
+//    [[UINavigationBar appearance] setTranslucent:YES];
     [[UINavigationBar appearance] setHlj_buttonItemColor:[UIColor whiteColor]];
     
     NSMutableDictionary *titleTextAttributes = [NSMutableDictionary dictionary];

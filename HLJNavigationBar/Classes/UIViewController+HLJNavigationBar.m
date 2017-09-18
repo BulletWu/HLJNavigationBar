@@ -11,6 +11,7 @@
 #import "UIImage+HLJNavBarExtend.h"
 #import "UINavigationController+HLJNavBar.h"
 #import "UINavigationBar+HLJNavigationItem.h"
+
 static void ExchangedMethod(SEL originalSelector, SEL swizzledSelector, Class class) {
     Method originalMethod = class_getInstanceMethod(class, originalSelector);
     Method swizzledMethod = class_getInstanceMethod(class, swizzledSelector);
@@ -35,6 +36,7 @@ static void ExchangedMethod(SEL originalSelector, SEL swizzledSelector, Class cl
 @interface UIViewController ()
 @property (nonatomic ,strong) UINavigationItem *hlj_newNavigationItem;
 @property (nonatomic ,assign) BOOL hlj_popOrPushIsAnimation;
+@property (nonatomic ,assign) CGRect hlj_viewRect;
 @end
 
 @implementation UIViewController (HLJNavigationBar)
@@ -57,6 +59,15 @@ static void ExchangedMethod(SEL originalSelector, SEL swizzledSelector, Class cl
 - (void)hlj_HLJNavigationBar_viewDidAppear:(BOOL)animated {
     [self hlj_HLJNavigationBar_viewDidAppear:animated];
     self.hlj_popOrPushIsAnimation = NO;
+    
+    //解决iOS 11 ，当后面一个controller的导航栏背景图片的透明度<1的时候，侧滑返回 ，self.view.y的值会变化的问题
+    if (@available(iOS 11.0, *)) {
+        if (!CGRectIsEmpty(self.hlj_viewRect)) {
+            self.view.frame = self.hlj_viewRect;
+        }else {
+            self.hlj_viewRect = self.view.frame;
+        }
+    }
 }
 
 - (void)hlj_HLJNavigationBar_viewWillDisappear:(BOOL)animated {
@@ -79,10 +90,10 @@ static void ExchangedMethod(SEL originalSelector, SEL swizzledSelector, Class cl
     [self.navigationController setNavigationBarHidden:YES animated:NO];
     [self setValue:self.hlj_newNavigationItem forKey:@"_navigationItem"];
     self.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc]
-                                        initWithTitle:@""
-                                        style:UIBarButtonItemStylePlain
-                                        target:nil
-                                        action:nil];
+                                             initWithTitle:@""
+                                             style:UIBarButtonItemStylePlain
+                                             target:nil
+                                             action:nil];
     [self.navigationController setNavigationBarHidden:NO animated:NO];
     [self hlj_setNeedsNavigationItem];
 }
@@ -116,4 +127,13 @@ static void ExchangedMethod(SEL originalSelector, SEL swizzledSelector, Class cl
     objc_setAssociatedObject(self, @selector(hlj_popOrPushIsAnimation), @(hlj_popOrPushIsAnimation), OBJC_ASSOCIATION_RETAIN_NONATOMIC);
 }
 
+- (CGRect)hlj_viewRect {
+    return [objc_getAssociatedObject(self, @selector(hlj_viewRect)) CGRectValue];
+}
+
+- (void)setHlj_viewRect:(CGRect)hlj_viewRect {
+    objc_setAssociatedObject(self, @selector(hlj_viewRect), @(hlj_viewRect), OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+}
+
 @end
+
