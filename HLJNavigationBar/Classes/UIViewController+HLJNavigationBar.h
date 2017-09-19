@@ -27,6 +27,6 @@ _Pragma("clang diagnostic pop") \
 
 @property (nonatomic ,assign) BOOL hlj_prefersNavigationBarHidden;//隐藏导航栏
 
-- (void)hlj_setNeedsNavigationItem;
+- (void)hlj_setNeedsNavigationItemLayout;
 - (void)hlj_replaceNavigationItem:(UINavigationItem *)navigationItem;
 @end

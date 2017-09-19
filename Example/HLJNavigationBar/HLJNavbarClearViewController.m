@@ -22,7 +22,7 @@
     [super viewDidLoad];
     self.view.backgroundColor = [UIColor yellowColor];
     self.navigationItem.hlj_navBarBgAlpha = 0;
-    [self hlj_setNeedsNavigationItem];
+    [self hlj_setNeedsNavigationItemLayout];
 }
 
 

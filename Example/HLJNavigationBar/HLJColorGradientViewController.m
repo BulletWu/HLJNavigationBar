@@ -111,7 +111,7 @@ _Pragma("clang diagnostic pop") \
     UIColor *endColor = [UIColor whiteColor];
     self.navigationItem.hlj_navBarTitleColor = [UIColor hlj_mixColor1:startColor color2:endColor ratio:percentComplete];
     self.navigationItem.hlj_navBarItemTintColor = [UIColor hlj_mixColor1:startColor color2:endColor ratio:percentComplete];
-    [self hlj_setNeedsNavigationItem];
+    [self hlj_setNeedsNavigationItemLayout];
 }
 
 #pragma mark - getters and setters
