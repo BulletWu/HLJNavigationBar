@@ -23,32 +23,43 @@
 - (instancetype)init {
     self = [super init];
     if (self) {
-        self.navigationItem.hlj_navBarBackgroundColor = [UIColor blueColor];
+         self.navigationItem.hlj_navBarBackgroundColor = [UIColor blueColor];
     }
     return self;
 }
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+//
+//    [self hlj_setNeedsNavigationItemLayout];
+    
     self.view.backgroundColor = [UIColor whiteColor];
 
-    UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, 36.0)];
-    UISearchBar *searchBar = [[UISearchBar alloc] init];
-    searchBar.delegate = self;
-    searchBar.placeholder = @"测试";
-    [view addSubview:searchBar];
-    
-    [searchBar mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.height.mas_equalTo(34.0);
-        make.left.right.mas_equalTo(view);
-        make.centerY.mas_equalTo(view);
-    }];
-    view.hlj_intrinsicContentSize = CGSizeMake(600, 36.0);
-    self.navigationItem.titleView = view;
-    
+    self.navigationItem.title = @"测试";
     UIBarButtonItem *item = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFixedSpace target:nil action:nil];
-    item.width = -12.0;
-    self.navigationItem.rightBarButtonItems = @[[[UIBarButtonItem alloc] initWithTitle:@"按钮" style:UIBarButtonItemStyleDone target:self action:nil],[[UIBarButtonItem alloc] initWithTitle:@"按钮" style:UIBarButtonItemStyleDone target:self action:nil],item];
+    item.width = 0;
+    self.navigationItem.rightBarButtonItems = @[item,[[UIBarButtonItem alloc] initWithTitle:@"按钮" style:UIBarButtonItemStyleDone target:self action:nil],[[UIBarButtonItem alloc] initWithTitle:@"按钮" style:UIBarButtonItemStyleDone target:self action:nil]];
+    self.navigationItem.hlj_barButtonItemTintColor = [UIColor redColor];
+}
+
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    NSLog(@"%@:viewWillAppear",NSStringFromClass([self class]));
+}
+
+- (void)viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:animated];
+    NSLog(@"%@:viewDidAppear",NSStringFromClass([self class]));
+}
+
+- (void)viewWillDisappear:(BOOL)animated {
+    [super viewWillDisappear:animated];
+    NSLog(@"%@:viewWillDisappear",NSStringFromClass([self class]));
+}
+
+- (void)viewDidDisappear:(BOOL)animated {
+    [super viewDidDisappear:animated];
+    NSLog(@"%@:viewDidDisappear",NSStringFromClass([self class]));
 }
 
 #pragma mark UISearchBarDelegate

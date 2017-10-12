@@ -11,39 +11,90 @@
 #import "UIImage+HLJNavBarExtend.h"
 #import "UINavigationBar+HLJNavigationItem.h"
 #import "UIBarButtonItem+HLJExtend.h"
+
+static void ExchangedMethod(SEL originalSelector, SEL swizzledSelector, Class class) {
+    Method originalMethod = class_getInstanceMethod(class, originalSelector);
+    Method swizzledMethod = class_getInstanceMethod(class, swizzledSelector);
+    BOOL didAddMethod =
+    class_addMethod(class,
+                    originalSelector,
+                    method_getImplementation(swizzledMethod),
+                    method_getTypeEncoding(swizzledMethod));
+    
+    if (didAddMethod) {
+        class_replaceMethod(class,
+                            swizzledSelector,
+                            method_getImplementation(originalMethod),
+                            method_getTypeEncoding(originalMethod));
+    }
+    else {
+        method_exchangeImplementations(originalMethod, swizzledMethod);
+    }
+}
+
+
 @implementation UINavigationItem (HLJNavigationBar)
 
-- (BOOL)hlj_hideNavBarShadowLine {
-    
-    return [objc_getAssociatedObject(self, @selector(hlj_hideNavBarShadowLine)) boolValue];
++ (void)load{
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        Class class = [self class];
+        ExchangedMethod(@selector(setRightBarButtonItem:), @selector(hlj_HLJNavigationBar_setRightBarButtonItem:), class);
+        ExchangedMethod(@selector(setLeftBarButtonItem:), @selector(hlj_HLJNavigationBar_setLeftBarButtonItem:), class);
+        ExchangedMethod(@selector(setRightBarButtonItems:), @selector(hlj_HLJNavigationBar_setRightBarButtonItems:), class);
+        ExchangedMethod(@selector(setLeftBarButtonItems:), @selector(hlj_HLJNavigationBar_setLeftBarButtonItems:), class);
+
+
+    });
 }
 
-- (void)setHlj_hideNavBarShadowLine:(BOOL)hlj_hideNavBarShadowLine {
-    objc_setAssociatedObject(self, @selector(hlj_hideNavBarShadowLine), @(hlj_hideNavBarShadowLine), OBJC_ASSOCIATION_RETAIN_NONATOMIC);
-}
-
-- (UIImage *)hlj_navBarShadowImage {
-    UIImage *image = nil;
-    if (self.hlj_hideNavBarShadowLine) {
-        return [[UIImage alloc] init];
-    }else if (objc_getAssociatedObject(self, @selector(hlj_navBarShadowImage))) {
-        image = objc_getAssociatedObject(self, @selector(hlj_navBarShadowImage));
-    }else {
-        image = [[UINavigationBar appearance] shadowImage];
+- (void)hlj_HLJNavigationBar_setRightBarButtonItem:(UIBarButtonItem *)rightBarButtonItem {
+    [self hlj_HLJNavigationBar_setRightBarButtonItem:rightBarButtonItem];
+    if (rightBarButtonItem) {
+        if (self.itemsUpdateBlock) {
+            self.itemsUpdateBlock(@[rightBarButtonItem]);
+        }
     }
-    return [UIImage hlj_imageByApplyingAlpha:self.hlj_navBarBgAlpha image:image];
 }
 
-- (void)setHlj_navBarShadowImage:(UIImage *)hlj_navBarShadowImage {
-    objc_setAssociatedObject(self, @selector(hlj_navBarShadowImage), hlj_navBarShadowImage, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+- (void)hlj_HLJNavigationBar_setLeftBarButtonItem:(UIBarButtonItem *)leftBarButtonItem {
+    [self hlj_HLJNavigationBar_setLeftBarButtonItem:leftBarButtonItem];
+    if (leftBarButtonItem) {
+        if (self.itemsUpdateBlock) {
+            self.itemsUpdateBlock(@[leftBarButtonItem]);
+        }
+    }
+}
+
+- (void)hlj_HLJNavigationBar_setRightBarButtonItems:(NSArray<UIBarButtonItem *> *)rightBarButtonItems {
+    [self hlj_HLJNavigationBar_setRightBarButtonItems:rightBarButtonItems];
+    if (rightBarButtonItems && rightBarButtonItems.count > 0) {
+        if (self.itemsUpdateBlock) {
+            self.itemsUpdateBlock(rightBarButtonItems);
+        }
+    }
+}
+
+- (void)hlj_HLJNavigationBar_setLeftBarButtonItems:(NSArray<UIBarButtonItem *> *)leftBarButtonItems {
+    [self hlj_HLJNavigationBar_setLeftBarButtonItems:leftBarButtonItems];
+    if (leftBarButtonItems && leftBarButtonItems.count > 0) {
+        if (self.itemsUpdateBlock) {
+            self.itemsUpdateBlock(leftBarButtonItems);
+        }
+    }
+}
+
+
+- (UIColor *)hlj_navBarShadowColor {
+    return objc_getAssociatedObject(self, @selector(hlj_navBarShadowColor));
+}
+
+- (void)setHlj_navBarShadowColor:(UIColor *)hlj_navBarShadowColor {
+    objc_setAssociatedObject(self, @selector(hlj_navBarShadowColor), hlj_navBarShadowColor, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
 }
 
 - (UIColor *)hlj_navBarBackgroundColor {
-    if (objc_getAssociatedObject(self, @selector(hlj_navBarBackgroundColor))) {
-        return objc_getAssociatedObject(self, @selector(hlj_navBarBackgroundColor));
-    }
-    UINavigationBar * appearance = [UINavigationBar appearance];
-    return [appearance hlj_backgroundColor];
+    return objc_getAssociatedObject(self, @selector(hlj_navBarBackgroundColor));
 }
 
 - (void)setHlj_navBarBackgroundColor:(UIColor *)hlj_navBarBackgroundColor {
@@ -54,51 +105,55 @@
     if (objc_getAssociatedObject(self,  @selector(hlj_navBarBgAlpha))) {
         return [objc_getAssociatedObject(self, @selector(hlj_navBarBgAlpha)) floatValue];
     }
-    return 1.0;
+    return -1;
 }
 
 - (void)setHlj_navBarBgAlpha:(CGFloat)hlj_navBarBgAlpha {
+    if (hlj_navBarBgAlpha <= 0) {
+        hlj_navBarBgAlpha = 0;
+    }
     objc_setAssociatedObject(self, @selector(hlj_navBarBgAlpha), @(hlj_navBarBgAlpha), OBJC_ASSOCIATION_RETAIN_NONATOMIC);
 }
 
+- (UIColor *)hlj_barButtonItemTintColor {
+    return objc_getAssociatedObject(self, @selector(hlj_barButtonItemTintColor));
+}
+
+- (void)setHlj_barButtonItemTintColor :(UIColor *)hlj_barButtonItemTintColor {
+    objc_setAssociatedObject(self, @selector(hlj_barButtonItemTintColor), hlj_barButtonItemTintColor , OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+}
+
+- (UIFont *)hlj_barButtonItemFont {
+    return objc_getAssociatedObject(self, @selector(hlj_barButtonItemFont));
+}
+
+- (void)setHlj_barButtonItemFont:(UIFont *)hlj_barButtonItemFont {
+    objc_setAssociatedObject(self, @selector(hlj_barButtonItemFont), hlj_barButtonItemFont, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+}
+
 - (UIColor *)hlj_navBarTitleColor {
-    if (objc_getAssociatedObject(self, @selector(hlj_navBarTitleColor))) {
-        return objc_getAssociatedObject(self, @selector(hlj_navBarTitleColor));
-    }
-    return self.hlj_titleTextAttributes[NSForegroundColorAttributeName];
+    return objc_getAssociatedObject(self, @selector(hlj_navBarTitleColor));
 }
 
 - (void)setHlj_navBarTitleColor:(UIColor *)hlj_navBarTitleColor {
     objc_setAssociatedObject(self, @selector(hlj_navBarTitleColor), hlj_navBarTitleColor, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
-    NSMutableDictionary *titleTextAttributes = [NSMutableDictionary dictionaryWithDictionary:self.hlj_titleTextAttributes];
-    titleTextAttributes[NSForegroundColorAttributeName] = hlj_navBarTitleColor;
-    self.hlj_titleTextAttributes = titleTextAttributes;
 }
 
-- (NSDictionary *)hlj_titleTextAttributes {
-    if (objc_getAssociatedObject(self, @selector(hlj_titleTextAttributes))) {
-        return objc_getAssociatedObject(self, @selector(hlj_titleTextAttributes));
-    }
-    UINavigationBar * appearance = [UINavigationBar appearance];
-    NSDictionary *titleTextAttributes = appearance.titleTextAttributes;
-    return titleTextAttributes;
+- (UIFont *)hlj_navBarTitleFont {
+    return objc_getAssociatedObject(self, @selector(hlj_navBarTitleFont));
 }
 
-- (void)setHlj_titleTextAttributes:(NSDictionary *)hlj_titleTextAttributes {
-    objc_setAssociatedObject(self, @selector(hlj_titleTextAttributes), hlj_titleTextAttributes, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+- (void)setHlj_navBarTitleFont:(UIFont *)hlj_navBarTitleFont {
+    objc_setAssociatedObject(self, @selector(hlj_navBarTitleFont), hlj_navBarTitleFont, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
 }
 
-- (UIColor *)hlj_navBarItemTintColor {
-    if (objc_getAssociatedObject(self, @selector(hlj_navBarItemTintColor))) {
-        return objc_getAssociatedObject(self, @selector(hlj_navBarItemTintColor));
-    }else {
-        UIColor *color = [[UINavigationBar appearance] hlj_buttonItemColor];
-        return color;
-    }
+- (void)setItemsUpdateBlock:(void (^)(NSArray<UIBarButtonItem *> *))itemsUpdateBlock {
+    objc_setAssociatedObject(self, @selector(itemsUpdateBlock), itemsUpdateBlock, OBJC_ASSOCIATION_COPY_NONATOMIC);
 }
 
-- (void)setHlj_navBarItemTintColor:(UIColor *)hlj_navBarItemTintColor {
-    objc_setAssociatedObject(self, @selector(hlj_navBarItemTintColor), hlj_navBarItemTintColor, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+- (void (^)(NSArray<UIBarButtonItem *> *))itemsUpdateBlock {
+    return objc_getAssociatedObject(self, @selector(itemsUpdateBlock));
 }
+
 
 @end

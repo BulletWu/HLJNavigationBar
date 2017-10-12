@@ -1,5 +1,7 @@
 # HLJNavigationBar
 
+iOS11 完美适配
+
 1.提供2种方法处理导航栏隐藏显示
 
 ／*
@@ -21,10 +23,5 @@ hlj_navBarBgAlpha,修改透明度
 - (void)navigationPopCancel;//侧滑返回取消
 */
 
-6.支持状态栏颜色智能根据背景色 改变
-
-/*
-损失一点空闲的cpu，去做（大家考虑使用）
-*/
 
 7.支持动态更新切换NavigationItem

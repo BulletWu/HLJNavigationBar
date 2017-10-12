@@ -41,9 +41,11 @@ static void ExchangedMethod(SEL originalSelector, SEL swizzledSelector, Class cl
     });
 }
 
+//UILayoutFittingCompressedSize: 返回合适的最小大小。
+//UILayoutFittingExpandedSize: 返回合适的最大大小。
 - (CGSize)hlj_HLJIntrinsicContentSize_intrinsicContentSize {
     if (!CGSizeEqualToSize(self.hlj_intrinsicContentSize, CGSizeZero)) {
-        return self.hlj_intrinsicContentSize;
+        return self.hlj_intrinsicContentSize; //UILayoutFittingExpandedSize
     }
     return [self hlj_HLJIntrinsicContentSize_intrinsicContentSize];
 }

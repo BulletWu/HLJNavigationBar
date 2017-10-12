@@ -9,6 +9,9 @@
 #import "UIGestureRecognizer+HLJNavBar.h"
 #import <objc/runtime.h>
 #import "UIViewController+HLJBackHandlerProtocol.h"
+#import "UIViewController+HLJNavigationBar.h"
+#import "UINavigationController+HLJNavBar.h"
+#import "UIImage+HLJNavBarExtend.h"
 
 static void ExchangedMethod(SEL originalSelector, SEL swizzledSelector, Class class) {
     Method originalMethod = class_getInstanceMethod(class, originalSelector);
@@ -84,7 +87,8 @@ static void ExchangedMethod(SEL originalSelector, SEL swizzledSelector, Class cl
     if([topViewController respondsToSelector:@selector(navigationShouldPop)]) {
         shouldPop = [topViewController navigationShouldPop];
     }
-    return shouldPop && [self.hlj_gestureRecognizerDelegate gestureRecognizerShouldBegin:gestureRecognizer];
+     shouldPop = shouldPop && [self.hlj_gestureRecognizerDelegate gestureRecognizerShouldBegin:gestureRecognizer];
+    return shouldPop;
 }
 
 #pragma mark - getters and setters

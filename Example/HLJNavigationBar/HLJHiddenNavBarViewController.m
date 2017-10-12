@@ -17,7 +17,7 @@
 @implementation HLJHiddenNavBarViewController
 
 - (void)viewDidLoad {
-    [super viewDidLoad];
+    [super viewDidLoad];    
     self.hlj_prefersNavigationBarHidden = YES;
     self.view.backgroundColor = [UIColor whiteColor];
 }

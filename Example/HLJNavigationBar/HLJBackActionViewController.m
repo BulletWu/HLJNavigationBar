@@ -27,10 +27,6 @@
 }
 
 - (BOOL)navigationShouldPop {
-        return [self navigationShouldPopOnBackButton];
-}
-
-- (BOOL)navigationShouldPopOnBackButton {
     if (!self.shouldPop) {
         UIAlertController *alertController = [UIAlertController alertControllerWithTitle:nil message:@"是否允许触发返回" preferredStyle:UIAlertControllerStyleAlert];
         [alertController addAction:[UIAlertAction actionWithTitle:@"否" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {

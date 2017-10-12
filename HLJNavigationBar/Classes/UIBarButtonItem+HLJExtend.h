@@ -11,5 +11,6 @@
 @interface UIBarButtonItem (HLJExtend)
 
 @property (nonatomic ,assign) BOOL hlj_isChangeTintColor; //是否需要更具tintColor 修改按钮颜色 ，默认yes
+@property (nonatomic ,strong) UIColor *hlj_tintColor; 
 
 @end

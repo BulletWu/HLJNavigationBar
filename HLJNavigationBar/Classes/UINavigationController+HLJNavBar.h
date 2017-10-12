@@ -11,5 +11,8 @@
 @interface UINavigationController (HLJNavBar)
 
 - (void)hlj_setNeedsNavigationItemStyleWithViewController:(UIViewController *)viewController;
+- (void)hlj_setNeedsNavigationBackgroundColor:(UIColor *)color;
+
+@property (nonatomic ,assign) BOOL hlj_viewControllerBasedNavigationBarAppearanceEnabled;
 
 @end

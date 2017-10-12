@@ -4,4 +4,5 @@ target 'HLJNavigationBar_Example' do
   pod 'HLJNavigationBar', :path => '../'
   pod 'Masonry'
   pod 'MJRefresh'
+  pod 'ReactiveCocoa', '2.1.8'
 end

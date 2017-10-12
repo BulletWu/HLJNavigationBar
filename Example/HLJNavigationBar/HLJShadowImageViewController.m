@@ -19,7 +19,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.navigationItem.hlj_navBarShadowImage = [UIImage hlj_imageWithColor:[UIColor yellowColor]];
+    self.navigationItem.hlj_navBarShadowColor = [UIColor yellowColor];
 //    UIColor *color = [UIColor colorWithPatternImage:self.navigationItem.hlj_navBarShadowImage];
     self.view.backgroundColor = [UIColor whiteColor];
 

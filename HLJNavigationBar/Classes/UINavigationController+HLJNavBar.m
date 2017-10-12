@@ -14,7 +14,7 @@
 #import "UIColor+HLJNavBarExtend.h"
 #import "UIViewController+HLJBackHandlerProtocol.h"
 #import "UINavigationItem+HLJNavigationBar.h"
-
+#import "UIBarButtonItem+HLJExtend.h"
 static void ExchangedMethod(SEL originalSelector, SEL swizzledSelector, Class class) {
     Method originalMethod = class_getInstanceMethod(class, originalSelector);
     Method swizzledMethod = class_getInstanceMethod(class, swizzledSelector);
@@ -53,13 +53,14 @@ typedef void (^HLJViewControllerWillAppearInjectBlock)(UIViewController *viewCon
 }
 
 - (void)hlj_viewWillAppear:(BOOL)animated{
-    [self hlj_viewWillAppear:animated];
     if ([NSStringFromClass([self class]) hasPrefix:@"DS"]) {
+        [self hlj_viewWillAppear:animated];
         return;
     }
     if (self.hlj_willAppearInjectBlock) {
         self.hlj_willAppearInjectBlock(self, animated);
     }
+    [self hlj_viewWillAppear:animated];
 }
 
 - (HLJViewControllerWillAppearInjectBlock)hlj_willAppearInjectBlock {
@@ -73,7 +74,9 @@ typedef void (^HLJViewControllerWillAppearInjectBlock)(UIViewController *viewCon
 @end
 
 @interface UINavigationController ()<UINavigationControllerDelegate,UINavigationBarDelegate,UIGestureRecognizerDelegate>
+
 @property (nonatomic ,weak) id<UINavigationControllerDelegate> navDelegate;
+
 @end
 
 @implementation UINavigationController (HLJNavBar)
@@ -104,9 +107,20 @@ typedef void (^HLJViewControllerWillAppearInjectBlock)(UIViewController *viewCon
             self.delegate = self.delegate;
         }
     }
+    __weak UINavigationController *bself = self;
+    self.navigationBar.shouldPopItemBlock = ^BOOL(UINavigationItem *item, UINavigationBar *navigationBar) {
+        return [bself hlj_navigationBar:navigationBar shouldPopItem:item];
+    };
+    self.navigationBar.shouldPushItemItemBlock = ^BOOL(UINavigationItem *item, UINavigationBar *navigationBar) {
+        return [bself hlj_navigationBar:navigationBar shouldPushItem:item];
+    };
 }
 
 - (void)hlj_pushViewController:(UIViewController *)viewController animated:(BOOL)animated {
+    if (self.viewControllers.count > 0) {
+        viewController.hidesBottomBarWhenPushed = YES;
+    }
+    self.navigationBar.translucent = NO;
     [self hlj_setupViewControllerBasedNavigationBarAppearanceIfNeeded:viewController];
     [self hlj_pushViewController:viewController animated:animated];
 }
@@ -114,7 +128,12 @@ typedef void (^HLJViewControllerWillAppearInjectBlock)(UIViewController *viewCon
 - (void)hlj_setupViewControllerBasedNavigationBarAppearanceIfNeeded:(UIViewController *)appearingViewController {
     __weak UINavigationController * bself = self;
     HLJViewControllerWillAppearInjectBlock block = ^(UIViewController *viewController, BOOL animated) {
-        [bself setNavigationBarHidden:viewController.hlj_prefersNavigationBarHidden animated:animated];
+        if (viewController.hlj_prefersNavigationBarHidden) {
+            bself.hlj_viewControllerBasedNavigationBarAppearanceEnabled = YES;
+        }
+        if (bself.hlj_viewControllerBasedNavigationBarAppearanceEnabled) {
+             [bself setNavigationBarHidden:viewController.hlj_prefersNavigationBarHidden animated:animated];
+        }
         void (^once)() = ^{
             if (objc_getAssociatedObject(viewController, _cmd)) {
                 return;
@@ -147,12 +166,8 @@ typedef void (^HLJViewControllerWillAppearInjectBlock)(UIViewController *viewCon
         [self hlj_updateInteractiveTransition:percentComplete];
         return;
     }
-    UIColor *toColor = toVC.navigationItem.hlj_navBarBackgroundColor;
-    UIColor *fromColor = fromVC.navigationItem.hlj_navBarBackgroundColor;
-    if (!CGColorEqualToColor(toColor.CGColor,fromColor.CGColor) || (toVC.navigationItem.hlj_navBarBgAlpha != fromVC.navigationItem.hlj_navBarBgAlpha) ) {
-        UIColor *mixColor = [UIColor hlj_mixColor1:toColor color2:fromColor ratio:percentComplete];
-        [self setNeedsNavigationBackgroundColor:mixColor alpha:(toVC.navigationItem.hlj_navBarBgAlpha * percentComplete  + fromVC.navigationItem.hlj_navBarBgAlpha * (1-percentComplete)) ];
-    }
+    UIColor *toColor = [toVC hlj_navBarBackgroundColor];
+    UIColor *fromColor = [fromVC hlj_navBarBackgroundColor];
     BOOL toHidesBack = [toVC isEqual:[self.viewControllers firstObject]] || toVC.navigationItem.hidesBackButton;
     if (toHidesBack) {
         CGFloat hideBack= 1 - percentComplete;
@@ -161,25 +176,29 @@ typedef void (^HLJViewControllerWillAppearInjectBlock)(UIViewController *viewCon
         CGFloat hideBack= 2 * ABS(0.5 - percentComplete);
         self.navigationBar.hlj_backImageView.alpha = hideBack;
     }
-    UIColor *fromVCTintColor = fromVC.navigationItem.hlj_navBarItemTintColor;
-    UIColor *toVCTintColor = toVC.navigationItem.hlj_navBarItemTintColor;
+    
+    if (!CGColorEqualToColor(toColor.CGColor,fromColor.CGColor)) {
+        UIColor *mixColor = [UIColor hlj_HLJNavBar_mixColor1:toColor color2:fromColor ratio:percentComplete];
+        [self setNeedsNavigationBackgroundColor:mixColor];
+    }
+    
+    UIColor *fromVCTintColor = [fromVC hlj_barButtonItemTintColor];
+    UIColor *toVCTintColor = [toVC hlj_barButtonItemTintColor];
     if (!CGColorEqualToColor(fromVCTintColor.CGColor,toVCTintColor.CGColor)) {
-        UIColor *mixColor = [UIColor hlj_mixColor1:toVCTintColor color2:fromVCTintColor ratio:percentComplete];
-        [self setNeedsNavigationItemBarButtonItemStyleWithViewController:fromVC tintColor:mixColor];
+        UIColor *mixColor = [UIColor hlj_HLJNavBar_mixColor1:toVCTintColor color2:fromVCTintColor ratio:percentComplete];
+        [self setNeedsNavigationItemBarButtonItemStyleWithViewController:fromVC tintColor:mixColor font:[toVC hlj_barButtonItemFont]];
     }
-    
-    UIColor *fromVCTitleColor = fromVC.navigationItem.hlj_navBarTitleColor;
-    UIColor *toVCTitleColor = toVC.navigationItem.hlj_navBarTitleColor;
+    UIColor *fromVCTitleColor = [fromVC hlj_navBarTitleColor];
+    UIColor *toVCTitleColor = [toVC hlj_navBarTitleColor];
     if (!CGColorEqualToColor(fromVCTitleColor.CGColor,toVCTitleColor.CGColor)) {
-        UIColor *mixColor = [UIColor hlj_mixColor1:toVCTitleColor color2:fromVCTitleColor ratio:percentComplete];
-        [self setNeedsNavigationBarTitleColor:mixColor];
+        UIColor *mixColor = [UIColor hlj_HLJNavBar_mixColor1:toVCTitleColor color2:fromVCTitleColor ratio:percentComplete];
+        [self setNeedsNavigationBarTitleColor:mixColor font:[toVC hlj_navBarTitleFont]];
     }
-    
     [self hlj_updateInteractiveTransition:percentComplete];
 }
 
-
 - (BOOL)hlj_respondsToSelector:(SEL)selector {
+
     if ([self hlj_respondsToSelector:selector]) {
         return YES;
     }
@@ -206,6 +225,47 @@ typedef void (^HLJViewControllerWillAppearInjectBlock)(UIViewController *viewCon
     self.navDelegate = delegate != self ? delegate : nil;
 }
 
+
+- (NSArray<__kindof UIViewController *> *)hlj_popToViewController:(UIViewController *)viewController animated:(BOOL)animated {
+    self.navigationBar.translucent = NO;
+    [self.viewControllers enumerateObjectsWithOptions:NSEnumerationReverse usingBlock:^(__kindof UIViewController * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+        if ([obj isEqual:viewController]) {
+            *stop = YES;
+        }else{
+            [self didPopViewController:obj];
+        }
+    }];
+    [self updateNavBarStyleWithViewController:viewController];
+    return [self hlj_popToViewController:viewController animated:animated];
+}
+
+- (NSArray<__kindof UIViewController *> *)hlj_popToRootViewControllerAnimated:(BOOL)animated {
+    self.navigationBar.translucent = NO;
+    [self.viewControllers enumerateObjectsWithOptions:NSEnumerationReverse usingBlock:^(__kindof UIViewController * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+        if ([obj isEqual:[self.viewControllers firstObject]]) {
+            *stop = YES;
+        }else{
+            [self didPopViewController:obj];
+        }
+    }];
+    [self updateNavBarStyleWithViewController:[self.viewControllers firstObject]];
+    return [self hlj_popToRootViewControllerAnimated:animated];
+}
+
+- (UIViewController *)hlj_popViewControllerAnimated:(BOOL)animated {
+    self.navigationBar.translucent = NO;
+    if (self.viewControllers.count >= 2) {
+        UIViewController *viewController = [self.viewControllers objectAtIndex:self.viewControllers.count - 2];
+        UIGestureRecognizer *gestureRecognizer = self.interactivePopGestureRecognizer;
+        if (gestureRecognizer.state != UIGestureRecognizerStateBegan) { //非手势触发的，一般为点击了其它位置或者是执行一段代码之后程序调用popViewControllerAnimated
+            [self updateNavBarStyleWithViewController:viewController];
+            [self didPopViewController:self.topViewController];
+        }else{//侧滑返回
+        }
+    }
+    return [self hlj_popViewControllerAnimated:animated];
+}
+
 #pragma mark - public methods
 - (void)hlj_setNeedsNavigationItemStyleWithViewController:(UIViewController *)viewController {
     [self updateNavBarStyleWithViewController:viewController];
@@ -213,6 +273,7 @@ typedef void (^HLJViewControllerWillAppearInjectBlock)(UIViewController *viewCon
 
 #pragma mark UINavigationControllerDelegate
 - (void)navigationController:(UINavigationController *)navigationController willShowViewController:(UIViewController *)viewController animated:(BOOL)animated{
+
     if (self.navDelegate && [self.navDelegate respondsToSelector:@selector(navigationController:willShowViewController:animated:)]) {
         [self.navDelegate navigationController:navigationController willShowViewController:viewController animated:animated];
     }
@@ -247,16 +308,14 @@ typedef void (^HLJViewControllerWillAppearInjectBlock)(UIViewController *viewCon
     }
 }
 
-#pragma mark UINavigationBarDelegate
-- (BOOL)navigationBar:(UINavigationBar *)navigationBar shouldPopItem:(UINavigationItem *)item {
-    if([self.viewControllers count] < [navigationBar.items count]) {
-        return YES;
-    }
+#pragma mark - private methods
+- (BOOL)hlj_navigationBar:(UINavigationBar *)navigationBar shouldPopItem:(UINavigationItem *)item {
     UIViewController *topVC = self.topViewController;
     BOOL shouldPop = YES;
     if([topVC respondsToSelector:@selector(navigationShouldPop)]) {
         shouldPop = [topVC navigationShouldPop];
     }
+
     if (shouldPop) {
         id<UIViewControllerTransitionCoordinator> coor = topVC.transitionCoordinator;
         if (coor && coor.initiallyInteractive) {
@@ -264,8 +323,10 @@ typedef void (^HLJViewControllerWillAppearInjectBlock)(UIViewController *viewCon
         }
         NSInteger itemCount = self.navigationBar.items.count;
         NSInteger n = self.viewControllers.count >= itemCount ? 2 : 1;
-        UIViewController *popToVC = self.viewControllers[self.viewControllers.count - n];
-        [self popToViewController:popToVC animated:YES];
+        if (self.viewControllers.count > self.viewControllers.count - n) {
+            UIViewController *popToVC = self.viewControllers[self.viewControllers.count - n];
+            [self popToViewController:popToVC animated:YES];
+        }
         return YES;
     }else{
         for(UIView *subview in [navigationBar subviews]) {
@@ -280,13 +341,11 @@ typedef void (^HLJViewControllerWillAppearInjectBlock)(UIViewController *viewCon
     return YES;
 }
 
-- (BOOL)navigationBar:(UINavigationBar *)navigationBar shouldPushItem:(UINavigationItem *)item{
+- (BOOL)hlj_navigationBar:(UINavigationBar *)navigationBar shouldPushItem:(UINavigationItem *)item{
     [self updateNavBarStyleWithViewController:self.topViewController];
     return YES;
 }
 
-
-#pragma mark - private methods
 - (void)dealInteractionChanges:(id<UIViewControllerTransitionCoordinatorContext>)context {
     if ([context isCancelled]) {
         UIViewController *fromVC = [context viewControllerForKey:UITransitionContextFromViewControllerKey];
@@ -309,21 +368,39 @@ typedef void (^HLJViewControllerWillAppearInjectBlock)(UIViewController *viewCon
 }
 
 - (void)updateNavBarStyleWithViewController:(UIViewController *)viewController {
+    if ([NSStringFromClass([self.topViewController class]) isEqualToString:@"UPWebController"]) {
+        [self.navigationBar setBackgroundImage:nil forBarMetrics:UIBarMetricsDefault];
+        return;
+    }
+    if (viewController.hlj_prefersNavigationBarHidden) {
+        return;
+    }
     BOOL hidesBack = [[self.viewControllers firstObject] isEqual:viewController] || viewController.navigationItem.hidesBackButton;
     self.navigationBar.hlj_backImageView.alpha = !hidesBack;
-    self.navigationBar.shadowImage = viewController.navigationItem.hlj_navBarShadowImage;
-    [self setNeedsNavigationBackgroundColor:viewController.navigationItem.hlj_navBarBackgroundColor alpha:viewController.navigationItem.hlj_navBarBgAlpha];
+    self.navigationBar.shadowImage = [UIImage hlj_HLJNavBar_imageWithColor:[viewController hlj_navBarShadowColor] alpha:1 size:CGSizeMake(1/[[UIScreen mainScreen] scale], 1/[[UIScreen mainScreen] scale])];
+    [self setNeedsNavigationBackgroundColor:[viewController hlj_navBarBackgroundColor]];
     [self setNeedsNavigationItemBarButtonItemStyleWithViewController:viewController];
+    [self setNeedsNavigationBarTitleColor:[viewController hlj_navBarTitleColor] font:[viewController hlj_navBarTitleFont]];
 }
 
-- (void)setNeedsNavigationBackgroundColor:(UIColor *)color alpha:(CGFloat)alpha{
-    UIImage *image = [[UIImage hlj_imageWithColor:color alpha:alpha] stretchableImageWithLeftCapWidth:2 topCapHeight:64];
+- (void)hlj_setNeedsNavigationBackgroundColor:(UIColor *)color {
+    [self setNeedsNavigationBackgroundColor:color];
+}
+
+- (void)setNeedsNavigationBackgroundColor:(UIColor *)color{
+    CGFloat alpha = 0.0;
+    [color getRed:nil green:nil blue:nil alpha:&alpha];
+    if (alpha < 1) {
+         self.navigationBar.translucent = YES;
+    }else {
+        self.navigationBar.translucent = NO;
+    }
+    UIImage *image = [[UIImage hlj_HLJNavBar_imageWithColor:color] stretchableImageWithLeftCapWidth:2 topCapHeight:64];
     for (UIView *view in self.navigationBar.subviews) {
         if ([NSStringFromClass([view class]) isEqualToString:@"_UIBarBackground"]) {
             for (UIView *subView in view.subviews) {
                 if ([subView isKindOfClass:[UIImageView class]]) {
                     UIImageView*imageView = (UIImageView *)subView;
-                    imageView.alpha = alpha;
                     imageView.image = image;
                 }
             }
@@ -333,69 +410,34 @@ typedef void (^HLJViewControllerWillAppearInjectBlock)(UIViewController *viewCon
 }
 
 - (void)setNeedsNavigationItemBarButtonItemStyleWithViewController:(UIViewController *)viewController {
-    [self setNeedsNavigationItemBarButtonItemStyleWithViewController:viewController tintColor:viewController.navigationItem.hlj_navBarItemTintColor];
+    [self setNeedsNavigationItemBarButtonItemStyleWithViewController:viewController tintColor:[viewController hlj_barButtonItemTintColor] font:[viewController hlj_barButtonItemFont]];
 }
 
-- (void)setNeedsNavigationItemBarButtonItemStyleWithViewController:(UIViewController *)viewController tintColor:(UIColor *)tintColor{
+- (void)setNeedsNavigationItemBarButtonItemStyleWithViewController:(UIViewController *)viewController tintColor:(UIColor *)tintColor font:(UIFont *)font{
     for (UIBarButtonItem *item in viewController.navigationItem.rightBarButtonItems) {
-        item.tintColor = tintColor;
-        [item setTitleTextAttributes:@{NSFontAttributeName: [UIFont systemFontOfSize:14]} forState:UIControlStateNormal];
+        item.hlj_tintColor = tintColor;
+        [item setTitleTextAttributes:@{NSFontAttributeName: font} forState:UIControlStateNormal];
+        [item setTitleTextAttributes:@{NSFontAttributeName: font} forState:UIControlStateHighlighted];
     }
     for (UIBarButtonItem *item in viewController.navigationItem.leftBarButtonItems) {
-        item.tintColor = tintColor;
-        [item setTitleTextAttributes:@{NSFontAttributeName: [UIFont systemFontOfSize:14]} forState:UIControlStateNormal];
+        item.hlj_tintColor = tintColor;
+        [item setTitleTextAttributes:@{NSFontAttributeName: font} forState:UIControlStateNormal];
+        [item setTitleTextAttributes:@{NSFontAttributeName: font} forState:UIControlStateHighlighted];
     }
-    viewController.navigationItem.leftBarButtonItem.tintColor = tintColor;
-    [viewController.navigationItem.leftBarButtonItem setTitleTextAttributes:@{NSFontAttributeName: [UIFont systemFontOfSize:14]} forState:UIControlStateNormal];
-    viewController.navigationItem.rightBarButtonItem.tintColor = tintColor;
-    [viewController.navigationItem.rightBarButtonItem setTitleTextAttributes:@{NSFontAttributeName: [UIFont systemFontOfSize:14]} forState:UIControlStateNormal];
+    viewController.navigationItem.leftBarButtonItem.hlj_tintColor = tintColor;
+    [viewController.navigationItem.leftBarButtonItem setTitleTextAttributes:@{NSFontAttributeName:font} forState:UIControlStateNormal];
+    [viewController.navigationItem.leftBarButtonItem setTitleTextAttributes:@{NSFontAttributeName:font} forState:UIControlStateHighlighted];
+    viewController.navigationItem.rightBarButtonItem.hlj_tintColor = tintColor;
+    [viewController.navigationItem.rightBarButtonItem setTitleTextAttributes:@{NSFontAttributeName: font} forState:UIControlStateNormal];
+    [viewController.navigationItem.rightBarButtonItem setTitleTextAttributes:@{NSFontAttributeName:font} forState:UIControlStateHighlighted];
     self.navigationBar.hlj_backImageView.tintColor = tintColor;
-    self.navigationBar.titleTextAttributes = viewController.navigationItem.hlj_titleTextAttributes;
 }
 
-- (void)setNeedsNavigationBarTitleColor:(UIColor *)color {
+- (void)setNeedsNavigationBarTitleColor:(UIColor *)color font:(UIFont *)font{
     NSMutableDictionary *titleTextAttributes = [NSMutableDictionary dictionaryWithDictionary:self.navigationBar.titleTextAttributes];
     titleTextAttributes[NSForegroundColorAttributeName] = color;
+    titleTextAttributes[NSFontAttributeName] = font;
     self.navigationBar.titleTextAttributes = titleTextAttributes;
-}
-
-- (NSArray<__kindof UIViewController *> *)hlj_popToViewController:(UIViewController *)viewController animated:(BOOL)animated {
-    [self.viewControllers enumerateObjectsWithOptions:NSEnumerationReverse usingBlock:^(__kindof UIViewController * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
-        if ([obj isEqual:viewController]) {
-            *stop = YES;
-        }else{
-            [self didPopViewController:obj];
-        }
-    }];
-    [self updateNavBarStyleWithViewController:viewController];
-    return [self hlj_popToViewController:viewController animated:animated];
-}
-
-- (NSArray<__kindof UIViewController *> *)hlj_popToRootViewControllerAnimated:(BOOL)animated {
-    [self.viewControllers enumerateObjectsWithOptions:NSEnumerationReverse usingBlock:^(__kindof UIViewController * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
-        if ([obj isEqual:[self.viewControllers firstObject]]) {
-            *stop = YES;
-        }else{
-            [self didPopViewController:obj];
-        }
-    }];
-    
-    [self updateNavBarStyleWithViewController:[self.viewControllers firstObject]];
-    return [self hlj_popToRootViewControllerAnimated:animated];
-}
-
-- (UIViewController *)hlj_popViewControllerAnimated:(BOOL)animated {
-    if (self.viewControllers.count >= 2) {
-        UIViewController *viewController = [self.viewControllers objectAtIndex:self.viewControllers.count - 2];
-        UIGestureRecognizer *gestureRecognizer = self.interactivePopGestureRecognizer;
-        if (gestureRecognizer.state != UIGestureRecognizerStateBegan) { //非手势触发的，一般为点击了其它位置或者是执行一段代码之后程序调用popViewControllerAnimated
-            [self updateNavBarStyleWithViewController:viewController];
-            [self didPopViewController:self.topViewController];
-        }else{//侧滑返回
-            
-        }
-    }
-    return [self hlj_popViewControllerAnimated:animated];
 }
 
 - (void)didPopViewController:(UIViewController *)viewController {
@@ -403,6 +445,7 @@ typedef void (^HLJViewControllerWillAppearInjectBlock)(UIViewController *viewCon
         [viewController navigationDidPop];
     }
 }
+
 
 #pragma mark UIGestureRecognizerDelegate
 - (BOOL)gestureRecognizerShouldBegin:(UIGestureRecognizer *)gestureRecognizer {
@@ -417,8 +460,21 @@ typedef void (^HLJViewControllerWillAppearInjectBlock)(UIViewController *viewCon
 }
 
 - (void)setNavDelegate:(id<UINavigationControllerDelegate>)navDelegate {
-    objc_setAssociatedObject(self, @selector(navigationBar), navDelegate, OBJC_ASSOCIATION_ASSIGN);
+    objc_setAssociatedObject(self, @selector(navDelegate), navDelegate, OBJC_ASSOCIATION_ASSIGN);
 }
 
+- (BOOL)hlj_viewControllerBasedNavigationBarAppearanceEnabled {
+    NSNumber *number = objc_getAssociatedObject(self, _cmd);
+    if (number) {
+        return number.boolValue;
+    }
+    self.hlj_viewControllerBasedNavigationBarAppearanceEnabled = NO;
+    return NO;
+}
+
+- (void)setHlj_viewControllerBasedNavigationBarAppearanceEnabled:(BOOL)hlj_viewControllerBasedNavigationBarAppearanceEnabled {
+    SEL key = @selector(hlj_viewControllerBasedNavigationBarAppearanceEnabled);
+    objc_setAssociatedObject(self, key, @(hlj_viewControllerBasedNavigationBarAppearanceEnabled), OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+}
 
 @end

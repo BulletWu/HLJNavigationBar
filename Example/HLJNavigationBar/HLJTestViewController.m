@@ -15,9 +15,14 @@
 #import "HLJColorGradientViewController.h"
 #import "HLJBackActionViewController.h"
 #import "HLJAddChildContainerViewController.h"
-#import "HLJSlidePageViewController.h"
+#import "UIViewController+HLJNavigationBar.h"
+#import "UIImage+HLJNavBarExtend.h"
+#import "UINavigationItem+HLJNavigationBar.h"
+#import "HLJNavigationStackViewController.h"
+#import "HLJFixedSpaceTestViewController.h"
+#import "UINavigationBar+HLJNavigationItem.h"
 
-#define kTableArray  @[@"hidden导航栏",@"导航栏分割线变色",@"导航栏背景透明",@"导航栏titleView自适应",@"颜色渐变",@"返回过程中的一些事件监听",@"addChildViewController对导航栏的影响",@"访问系统相册",@"悬停控件"]
+#define kTableArray  @[@"hidden导航栏",@"导航栏分割线变色",@"导航栏背景透明",@"导航栏titleView自适应",@"颜色渐变",@"返回过程中的一些事件监听",@"addChildViewController对导航栏的影响",@"访问系统相册",@"整个导航模块变色", @"边距修改"]
 
 @interface HLJTestViewController ()<UITableViewDelegate,UITableViewDataSource>
 
@@ -30,11 +35,30 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.title = @"测试";
-
     [self.view addSubview:self.tableView];
     [self.tableView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.edges.mas_equalTo(self.view);
     }];
+}
+
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    NSLog(@"%@:viewWillAppear",NSStringFromClass([self class]));
+    
+}
+- (void)viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:animated];
+    NSLog(@"%@:viewDidAppear",NSStringFromClass([self class]));
+}
+
+- (void)viewWillDisappear:(BOOL)animated {
+    [super viewWillDisappear:animated];
+    NSLog(@"%@:viewWillDisappear",NSStringFromClass([self class]));
+}
+
+- (void)viewDidDisappear:(BOOL)animated {
+    [super viewDidDisappear:animated];
+    NSLog(@"%@:viewDidDisappear",NSStringFromClass([self class]));
 }
 
 
@@ -92,11 +116,19 @@
     }else if (indexPath.row == 7) {
         UIImagePickerController *pickerViewController = [[UIImagePickerController alloc] init];
         [pickerViewController setSourceType:UIImagePickerControllerSourceTypePhotoLibrary];
-        [pickerViewController setAllowsEditing:YES];// 设置是否可以管理已经存在的图片或者视频
+        [pickerViewController setAllowsEditing:YES];
         [self.navigationController presentViewController:pickerViewController animated:YES completion:^{
         }];
     }else if (indexPath.row == 8) {
-        HLJSlidePageViewController *viewController = [[HLJSlidePageViewController alloc] init];
+        HLJTestViewController *viewController = [[HLJTestViewController alloc] init];
+        UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:viewController];
+        nav.navigationBar.hlj_backgroundColor = [UIColor blueColor];
+        [self.navigationController presentViewController:nav animated:YES completion:nil];
+//        HLJHorizontalPageViewController *viewController = [[HLJHorizontalPageViewController alloc] init];
+//        [self.navigationController pushViewController:viewController animated:YES];
+    }else if(indexPath.row == 9) {
+        HLJFixedSpaceTestViewController *viewController = [[HLJFixedSpaceTestViewController alloc] init];
+        viewController.title = kTableArray[indexPath.row];
         [self.navigationController pushViewController:viewController animated:YES];
     }
 }

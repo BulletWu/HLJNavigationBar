@@ -10,7 +10,8 @@
 
 @interface UIColor (HLJNavBarExtend)
 
-+(UIColor *)hlj_mixColor1:(UIColor*)color1 color2:(UIColor *)color2 ratio:(CGFloat)ratio;
+-(CGFloat)hlj_HLJNavBar_alphaComponent;
 
++(UIColor *)hlj_HLJNavBar_mixColor1:(UIColor*)color1 color2:(UIColor *)color2 ratio:(CGFloat)ratio;
 
 @end

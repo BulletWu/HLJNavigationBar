@@ -21,12 +21,18 @@ vc.automaticallyAdjustsScrollViewInsets = NO;\
 _Pragma("clang diagnostic pop") \
 } while (0)
 
-
-
 @interface UIViewController (HLJNavigationBar)
 
 @property (nonatomic ,assign) BOOL hlj_prefersNavigationBarHidden;//隐藏导航栏
 
+- (UIColor *)hlj_navBarShadowColor;
+- (UIColor *)hlj_navBarBackgroundColor;
+- (CGFloat)hlj_navBarBgAlpha;
+- (UIColor *)hlj_barButtonItemTintColor;
+- (UIFont *)hlj_barButtonItemFont;
+- (UIColor *)hlj_navBarTitleColor;
+- (UIFont *)hlj_navBarTitleFont;
+
 - (void)hlj_setNeedsNavigationItemLayout;
-- (void)hlj_replaceNavigationItem:(UINavigationItem *)navigationItem;
+//- (void)hlj_replaceNavigationItem:(UINavigationItem *)navigationItem completeBlock:(void(^)())completeBlock;
 @end

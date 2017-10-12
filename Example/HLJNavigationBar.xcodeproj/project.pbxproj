@@ -8,19 +8,16 @@
 
 /* Begin PBXBuildFile section */
 		1165D4F8B5B6D396A2964962 /* libPods-HLJNavigationBar_Example.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1B2168145C88A119F4CB6CC3 /* libPods-HLJNavigationBar_Example.a */; };
-		4C2CF1C51F5EAFFF005DF8D2 /* UINavigationItem+HLJNavigationBar.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C2CF1C41F5EAFFF005DF8D2 /* UINavigationItem+HLJNavigationBar.m */; };
+		2781A1191F7BAF630016CAB1 /* HLJFixedSpaceTestViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2781A1181F7BAF620016CAB1 /* HLJFixedSpaceTestViewController.m */; };
 		4C2EB8C91F5D24070031FFBF /* HLJBackActionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C2EB8C81F5D24070031FFBF /* HLJBackActionViewController.m */; };
 		4C2EB8CC1F5D26160031FFBF /* HLJAddChildContainerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C2EB8CB1F5D26160031FFBF /* HLJAddChildContainerViewController.m */; };
 		4C4C247D1F564543000309D9 /* HLJTestViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C4C247C1F564543000309D9 /* HLJTestViewController.m */; };
 		4C4C24801F5647EC000309D9 /* HLJHiddenNavBarViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C4C247F1F5647EC000309D9 /* HLJHiddenNavBarViewController.m */; };
 		4C4C24861F5656B0000309D9 /* HLJShadowImageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C4C24851F5656B0000309D9 /* HLJShadowImageViewController.m */; };
 		4C4C24891F565792000309D9 /* HLJNavbarClearViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C4C24881F565792000309D9 /* HLJNavbarClearViewController.m */; };
-		4C886D341F692087009C091D /* UIView+HLJIntrinsicContentSize.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C886D331F692087009C091D /* UIView+HLJIntrinsicContentSize.m */; };
+		4C78DC1C1F7357EC00C084F0 /* HLJNavigationStackViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C78DC1B1F7357EC00C084F0 /* HLJNavigationStackViewController.m */; };
 		4CC4A6961F568B12006F9E59 /* HLJNavBarTitleViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CC4A6951F568B12006F9E59 /* HLJNavBarTitleViewController.m */; };
 		4CC4A6991F568BB7006F9E59 /* HLJColorGradientViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CC4A6981F568BB7006F9E59 /* HLJColorGradientViewController.m */; };
-		4CE9FCCB1F6B6E07004F10A0 /* HLJSlidePageView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CE9FCCA1F6B6E07004F10A0 /* HLJSlidePageView.m */; };
-		4CE9FCCE1F6B6E46004F10A0 /* HLJSlidePageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CE9FCCD1F6B6E46004F10A0 /* HLJSlidePageViewController.m */; };
-		4CE9FCD11F6B6E93004F10A0 /* HLJTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CE9FCCF1F6B6E92004F10A0 /* HLJTableViewController.m */; };
 		6003F58E195388D20070C39A /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6003F58D195388D20070C39A /* Foundation.framework */; };
 		6003F590195388D20070C39A /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6003F58F195388D20070C39A /* CoreGraphics.framework */; };
 		6003F592195388D20070C39A /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6003F591195388D20070C39A /* UIKit.framework */; };
@@ -50,20 +47,22 @@
 
 /* Begin PBXFileReference section */
 		1B2168145C88A119F4CB6CC3 /* libPods-HLJNavigationBar_Example.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-HLJNavigationBar_Example.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		2705769C1F79F4F1004AFB69 /* UINavigationItem+HLJFixSpace.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UINavigationItem+HLJFixSpace.m"; sourceTree = "<group>"; };
+		2705769D1F79F4F1004AFB69 /* UINavigationItem+HLJFixSpace.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UINavigationItem+HLJFixSpace.h"; sourceTree = "<group>"; };
+		2781A1171F7BAF620016CAB1 /* HLJFixedSpaceTestViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HLJFixedSpaceTestViewController.h; sourceTree = "<group>"; };
+		2781A1181F7BAF620016CAB1 /* HLJFixedSpaceTestViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HLJFixedSpaceTestViewController.m; sourceTree = "<group>"; };
 		4C10D7301F556E5400F024D6 /* .gitkeep */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitkeep; sourceTree = "<group>"; };
 		4C10D7311F556E5400F024D6 /* ReplaceMe.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ReplaceMe.m; sourceTree = "<group>"; };
 		4C10D7321F556E7F00F024D6 /* UIViewController+HLJNavigationBar.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "UIViewController+HLJNavigationBar.h"; sourceTree = "<group>"; };
 		4C10D7331F556E7F00F024D6 /* UIViewController+HLJNavigationBar.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "UIViewController+HLJNavigationBar.m"; sourceTree = "<group>"; };
 		4C10D7351F55709400F024D6 /* UINavigationController+HLJNavBar.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "UINavigationController+HLJNavBar.h"; sourceTree = "<group>"; };
 		4C10D7361F55709400F024D6 /* UINavigationController+HLJNavBar.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "UINavigationController+HLJNavBar.m"; sourceTree = "<group>"; };
-		4C2CF1C31F5EAFFF005DF8D2 /* UINavigationItem+HLJNavigationBar.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "UINavigationItem+HLJNavigationBar.h"; sourceTree = "<group>"; };
-		4C2CF1C41F5EAFFF005DF8D2 /* UINavigationItem+HLJNavigationBar.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "UINavigationItem+HLJNavigationBar.m"; sourceTree = "<group>"; };
+		4C26BF191F7251D300521509 /* UINavigationItem+HLJNavigationBar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UINavigationItem+HLJNavigationBar.h"; sourceTree = "<group>"; };
+		4C26BF1A1F7251D300521509 /* UINavigationItem+HLJNavigationBar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UINavigationItem+HLJNavigationBar.m"; sourceTree = "<group>"; };
 		4C2EB8BB1F5CE7F20031FFBF /* UIColor+HLJNavBarExtend.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "UIColor+HLJNavBarExtend.h"; sourceTree = "<group>"; };
 		4C2EB8BC1F5CE7F20031FFBF /* UIColor+HLJNavBarExtend.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "UIColor+HLJNavBarExtend.m"; sourceTree = "<group>"; };
 		4C2EB8BE1F5CF2FB0031FFBF /* UIBarButtonItem+HLJExtend.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "UIBarButtonItem+HLJExtend.h"; sourceTree = "<group>"; };
 		4C2EB8BF1F5CF2FB0031FFBF /* UIBarButtonItem+HLJExtend.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "UIBarButtonItem+HLJExtend.m"; sourceTree = "<group>"; };
-		4C2EB8C11F5D01EE0031FFBF /* UIApplication+HLJStatusBar.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "UIApplication+HLJStatusBar.h"; sourceTree = "<group>"; };
-		4C2EB8C21F5D01EE0031FFBF /* UIApplication+HLJStatusBar.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "UIApplication+HLJStatusBar.m"; sourceTree = "<group>"; };
 		4C2EB8C41F5D1F2E0031FFBF /* UIGestureRecognizer+HLJNavBar.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "UIGestureRecognizer+HLJNavBar.h"; sourceTree = "<group>"; };
 		4C2EB8C51F5D1F2E0031FFBF /* UIGestureRecognizer+HLJNavBar.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "UIGestureRecognizer+HLJNavBar.m"; sourceTree = "<group>"; };
 		4C2EB8C71F5D24070031FFBF /* HLJBackActionViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HLJBackActionViewController.h; sourceTree = "<group>"; };
@@ -80,8 +79,10 @@
 		4C4C24851F5656B0000309D9 /* HLJShadowImageViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HLJShadowImageViewController.m; sourceTree = "<group>"; };
 		4C4C24871F565792000309D9 /* HLJNavbarClearViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HLJNavbarClearViewController.h; sourceTree = "<group>"; };
 		4C4C24881F565792000309D9 /* HLJNavbarClearViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HLJNavbarClearViewController.m; sourceTree = "<group>"; };
-		4C886D321F692087009C091D /* UIView+HLJIntrinsicContentSize.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "UIView+HLJIntrinsicContentSize.h"; sourceTree = "<group>"; };
-		4C886D331F692087009C091D /* UIView+HLJIntrinsicContentSize.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "UIView+HLJIntrinsicContentSize.m"; sourceTree = "<group>"; };
+		4C78DC1A1F7357EC00C084F0 /* HLJNavigationStackViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HLJNavigationStackViewController.h; sourceTree = "<group>"; };
+		4C78DC1B1F7357EC00C084F0 /* HLJNavigationStackViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HLJNavigationStackViewController.m; sourceTree = "<group>"; };
+		4C78DC201F73B2A800C084F0 /* UIView+HLJIntrinsicContentSize.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "UIView+HLJIntrinsicContentSize.m"; sourceTree = "<group>"; };
+		4C78DC211F73B2A800C084F0 /* UIView+HLJIntrinsicContentSize.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "UIView+HLJIntrinsicContentSize.h"; sourceTree = "<group>"; };
 		4CC4A6941F568B12006F9E59 /* HLJNavBarTitleViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HLJNavBarTitleViewController.h; sourceTree = "<group>"; };
 		4CC4A6951F568B12006F9E59 /* HLJNavBarTitleViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HLJNavBarTitleViewController.m; sourceTree = "<group>"; };
 		4CC4A6971F568BB7006F9E59 /* HLJColorGradientViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HLJColorGradientViewController.h; sourceTree = "<group>"; };
@@ -90,12 +91,6 @@
 		4CC4A6C31F56B4D3006F9E59 /* UINavigationBar+HLJNavigationItem.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "UINavigationBar+HLJNavigationItem.m"; sourceTree = "<group>"; };
 		4CC4A6C51F56BB5B006F9E59 /* UIViewController+HLJBackHandlerProtocol.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "UIViewController+HLJBackHandlerProtocol.h"; sourceTree = "<group>"; };
 		4CC4A6C61F56BB5B006F9E59 /* UIViewController+HLJBackHandlerProtocol.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "UIViewController+HLJBackHandlerProtocol.m"; sourceTree = "<group>"; };
-		4CE9FCC91F6B6E07004F10A0 /* HLJSlidePageView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HLJSlidePageView.h; sourceTree = "<group>"; };
-		4CE9FCCA1F6B6E07004F10A0 /* HLJSlidePageView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HLJSlidePageView.m; sourceTree = "<group>"; };
-		4CE9FCCC1F6B6E46004F10A0 /* HLJSlidePageViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = HLJSlidePageViewController.h; path = ../../../HLJPod/HLJSlidePageView/Example/HLJSlidePageView/HLJSlidePageViewController.h; sourceTree = "<group>"; };
-		4CE9FCCD1F6B6E46004F10A0 /* HLJSlidePageViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = HLJSlidePageViewController.m; path = ../../../HLJPod/HLJSlidePageView/Example/HLJSlidePageView/HLJSlidePageViewController.m; sourceTree = "<group>"; };
-		4CE9FCCF1F6B6E92004F10A0 /* HLJTableViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HLJTableViewController.m; sourceTree = "<group>"; };
-		4CE9FCD01F6B6E93004F10A0 /* HLJTableViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HLJTableViewController.h; sourceTree = "<group>"; };
 		6003F58A195388D20070C39A /* HLJNavigationBar_Example.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = HLJNavigationBar_Example.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		6003F58D195388D20070C39A /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		6003F58F195388D20070C39A /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -153,6 +148,8 @@
 		4C10D72F1F556E5400F024D6 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
+				2705769D1F79F4F1004AFB69 /* UINavigationItem+HLJFixSpace.h */,
+				2705769C1F79F4F1004AFB69 /* UINavigationItem+HLJFixSpace.m */,
 				4C10D7301F556E5400F024D6 /* .gitkeep */,
 				4C10D7311F556E5400F024D6 /* ReplaceMe.m */,
 				4C10D7321F556E7F00F024D6 /* UIViewController+HLJNavigationBar.h */,
@@ -171,10 +168,10 @@
 				4CC4A6C61F56BB5B006F9E59 /* UIViewController+HLJBackHandlerProtocol.m */,
 				4C2EB8BE1F5CF2FB0031FFBF /* UIBarButtonItem+HLJExtend.h */,
 				4C2EB8BF1F5CF2FB0031FFBF /* UIBarButtonItem+HLJExtend.m */,
-				4C2EB8C11F5D01EE0031FFBF /* UIApplication+HLJStatusBar.h */,
-				4C2EB8C21F5D01EE0031FFBF /* UIApplication+HLJStatusBar.m */,
-				4C2CF1C31F5EAFFF005DF8D2 /* UINavigationItem+HLJNavigationBar.h */,
-				4C2CF1C41F5EAFFF005DF8D2 /* UINavigationItem+HLJNavigationBar.m */,
+				4C26BF191F7251D300521509 /* UINavigationItem+HLJNavigationBar.h */,
+				4C26BF1A1F7251D300521509 /* UINavigationItem+HLJNavigationBar.m */,
+				4C78DC211F73B2A800C084F0 /* UIView+HLJIntrinsicContentSize.h */,
+				4C78DC201F73B2A800C084F0 /* UIView+HLJIntrinsicContentSize.m */,
 			);
 			name = Classes;
 			path = ../HLJNavigationBar/Classes;
@@ -218,12 +215,10 @@
 		6003F593195388D20070C39A /* Example for HLJNavigationBar */ = {
 			isa = PBXGroup;
 			children = (
+				2781A1171F7BAF620016CAB1 /* HLJFixedSpaceTestViewController.h */,
+				2781A1181F7BAF620016CAB1 /* HLJFixedSpaceTestViewController.m */,
 				6003F59C195388D20070C39A /* AppDelegate.h */,
 				6003F59D195388D20070C39A /* AppDelegate.m */,
-				4CE9FCC91F6B6E07004F10A0 /* HLJSlidePageView.h */,
-				4CE9FCCA1F6B6E07004F10A0 /* HLJSlidePageView.m */,
-				4C886D321F692087009C091D /* UIView+HLJIntrinsicContentSize.h */,
-				4C886D331F692087009C091D /* UIView+HLJIntrinsicContentSize.m */,
 				4C4C247B1F564543000309D9 /* HLJTestViewController.h */,
 				4C4C247C1F564543000309D9 /* HLJTestViewController.m */,
 				4C4C247E1F5647EC000309D9 /* HLJHiddenNavBarViewController.h */,
@@ -240,10 +235,8 @@
 				4C2EB8C81F5D24070031FFBF /* HLJBackActionViewController.m */,
 				4C2EB8CA1F5D26160031FFBF /* HLJAddChildContainerViewController.h */,
 				4C2EB8CB1F5D26160031FFBF /* HLJAddChildContainerViewController.m */,
-				4CE9FCCC1F6B6E46004F10A0 /* HLJSlidePageViewController.h */,
-				4CE9FCCD1F6B6E46004F10A0 /* HLJSlidePageViewController.m */,
-				4CE9FCD01F6B6E93004F10A0 /* HLJTableViewController.h */,
-				4CE9FCCF1F6B6E92004F10A0 /* HLJTableViewController.m */,
+				4C78DC1A1F7357EC00C084F0 /* HLJNavigationStackViewController.h */,
+				4C78DC1B1F7357EC00C084F0 /* HLJNavigationStackViewController.m */,
 				873B8AEA1B1F5CCA007FD442 /* Main.storyboard */,
 				6003F5A5195388D20070C39A /* hljViewController.h */,
 				6003F5A6195388D20070C39A /* hljViewController.m */,
@@ -411,9 +404,12 @@
 			files = (
 			);
 			inputPaths = (
+				"${SRCROOT}/Pods/Target Support Files/Pods-HLJNavigationBar_Example/Pods-HLJNavigationBar_Example-resources.sh",
+				"${PODS_ROOT}/MJRefresh/MJRefresh/MJRefresh.bundle",
 			);
 			name = "[CP] Copy Pods Resources";
 			outputPaths = (
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -426,13 +422,16 @@
 			files = (
 			);
 			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
 			);
 			name = "[CP] Check Pods Manifest.lock";
 			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-HLJNavigationBar_Example-checkManifestLockResult.txt",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
 		41FFDE6BF5077C5AC2634F62 /* [CP] Embed Pods Frameworks */ = {
@@ -461,18 +460,15 @@
 				6003F59E195388D20070C39A /* AppDelegate.m in Sources */,
 				4C4C24801F5647EC000309D9 /* HLJHiddenNavBarViewController.m in Sources */,
 				6003F5A7195388D20070C39A /* hljViewController.m in Sources */,
+				2781A1191F7BAF630016CAB1 /* HLJFixedSpaceTestViewController.m in Sources */,
 				4C2EB8C91F5D24070031FFBF /* HLJBackActionViewController.m in Sources */,
 				4CC4A6961F568B12006F9E59 /* HLJNavBarTitleViewController.m in Sources */,
-				4CE9FCCE1F6B6E46004F10A0 /* HLJSlidePageViewController.m in Sources */,
-				4C2CF1C51F5EAFFF005DF8D2 /* UINavigationItem+HLJNavigationBar.m in Sources */,
-				4CE9FCD11F6B6E93004F10A0 /* HLJTableViewController.m in Sources */,
 				4C2EB8CC1F5D26160031FFBF /* HLJAddChildContainerViewController.m in Sources */,
-				4CE9FCCB1F6B6E07004F10A0 /* HLJSlidePageView.m in Sources */,
 				4CC4A6991F568BB7006F9E59 /* HLJColorGradientViewController.m in Sources */,
-				4C886D341F692087009C091D /* UIView+HLJIntrinsicContentSize.m in Sources */,
 				6003F59A195388D20070C39A /* main.m in Sources */,
 				4C4C24861F5656B0000309D9 /* HLJShadowImageViewController.m in Sources */,
 				4C4C24891F565792000309D9 /* HLJNavbarClearViewController.m in Sources */,
+				4C78DC1C1F7357EC00C084F0 /* HLJNavigationStackViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

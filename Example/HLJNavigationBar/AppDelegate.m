@@ -17,24 +17,29 @@
 {
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     self.window.backgroundColor = [UIColor whiteColor];
- 
+    [self.window makeKeyAndVisible];
+
+    /**
+     *  默认情况下tableview header和fooer颜色的设置
+     */
+    if (@available(iOS 11.0, *)) {
+        [[UIScrollView appearance] setContentInsetAdjustmentBehavior:UIScrollViewContentInsetAdjustmentNever];
+        // 去掉iOS11系统默认开启的self-sizing
+        [UITableView appearance].estimatedRowHeight = 0;
+        [UITableView appearance].estimatedSectionHeaderHeight = 0;
+        [UITableView appearance].estimatedSectionFooterHeight = 0;
+    }
+    
     //配置一些ui信息（必须）
-    [[UINavigationBar appearance] setShadowImage:[UIImage hlj_imageWithColor:[UIColor lightGrayColor]]];
     [[UINavigationBar appearance] setHlj_backImage:[[UIImage imageNamed:@"icon_common_back_main"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate]];
-    [[UINavigationBar appearance] setHlj_backgroundColor:[UIColor redColor]];
-    UIImage *image = [UIImage hlj_imageWithColor:[UINavigationBar appearance].hlj_backgroundColor];
-    [[UINavigationBar appearance] setBackgroundImage:image forBarMetrics:UIBarMetricsDefault];
-//    [[UINavigationBar appearance] setTranslucent:YES];
-    [[UINavigationBar appearance] setHlj_buttonItemColor:[UIColor whiteColor]];
-    
-    NSMutableDictionary *titleTextAttributes = [NSMutableDictionary dictionary];
-    titleTextAttributes[NSForegroundColorAttributeName] = [UIColor whiteColor];
-    titleTextAttributes[NSFontAttributeName] = [UIFont systemFontOfSize:17.0];
-    [[UINavigationBar appearance] setTitleTextAttributes:titleTextAttributes];
-    
-    UIBarButtonItem *appearance = [UIBarButtonItem appearance];
-    [appearance setTitleTextAttributes:@{NSFontAttributeName: [UIFont systemFontOfSize:14]} forState:UIControlStateNormal];
-    
+    [[UINavigationBar appearance] setHlj_shadowColor:[UIColor grayColor]];
+    [[UINavigationBar appearance] setHlj_alpha:1];
+    [[UINavigationBar appearance] setHlj_backgroundColor:[UIColor whiteColor]];
+    [[UINavigationBar appearance] setHlj_barButtonItemTintColor:[UIColor redColor]];
+    [[UINavigationBar appearance] setHlj_barButtonItemFont:[UIFont systemFontOfSize:14.0]];
+    [[UINavigationBar appearance] setHlj_titleColor:[UIColor blackColor]];
+    [[UINavigationBar appearance] setHlj_font:[UIFont boldSystemFontOfSize:17.0]];
+ 
     HLJTestViewController *viewController = [[HLJTestViewController alloc] init];
     UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:viewController];
     self.window.rootViewController = nav;

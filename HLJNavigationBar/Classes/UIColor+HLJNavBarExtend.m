@@ -10,11 +10,17 @@
 
 @implementation UIColor (HLJNavBarExtend)
 
-+(UIColor *)hlj_mixColor1:(UIColor*)color1 color2:(UIColor *)color2 ratio:(CGFloat)ratio {
+-(CGFloat)hlj_HLJNavBar_alphaComponent {
+    UIColor *color = [self hlj_HLJNavBar_colorHandleSpace];
+    const CGFloat * components = CGColorGetComponents(color.CGColor);
+    return components[3];
+}
+
++(UIColor *)hlj_HLJNavBar_mixColor1:(UIColor*)color1 color2:(UIColor *)color2 ratio:(CGFloat)ratio {
     if(ratio > 1)
         ratio = 1;
-    color1 = [color1 hlj_colorHandleSpace];
-    color2 = [color2 hlj_colorHandleSpace];
+    color1 = [color1 hlj_HLJNavBar_colorHandleSpace];
+    color2 = [color2 hlj_HLJNavBar_colorHandleSpace];
     const CGFloat * components1 = CGColorGetComponents(color1.CGColor);
     const CGFloat * components2 = CGColorGetComponents(color2.CGColor);
     CGFloat r = components1[0]*ratio + components2[0]*(1-ratio);
@@ -24,7 +30,7 @@
     return [UIColor colorWithRed:r green:g blue:b alpha:alpha];
 }
 
-- (UIColor *)hlj_colorHandleSpace {
+- (UIColor *)hlj_HLJNavBar_colorHandleSpace {
     UIColor *color = self;
     if (CGColorGetNumberOfComponents(self.CGColor) < 4) {
         if (CGColorSpaceGetModel(CGColorGetColorSpace(color.CGColor)) == kCGColorSpaceModelPattern){
