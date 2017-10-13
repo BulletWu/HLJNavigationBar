@@ -253,9 +253,11 @@ typedef void (^HLJViewControllerWillAppearInjectBlock)(UIViewController *viewCon
 }
 
 - (UIViewController *)hlj_popViewControllerAnimated:(BOOL)animated {
-    self.navigationBar.translucent = NO;
     if (self.viewControllers.count >= 2) {
         UIViewController *viewController = [self.viewControllers objectAtIndex:self.viewControllers.count - 2];
+        if([viewController hlj_navBarBgAlpha] >= 1) {
+            self.navigationBar.translucent = NO;
+        }
         UIGestureRecognizer *gestureRecognizer = self.interactivePopGestureRecognizer;
         if (gestureRecognizer.state != UIGestureRecognizerStateBegan) { //非手势触发的，一般为点击了其它位置或者是执行一段代码之后程序调用popViewControllerAnimated
             [self updateNavBarStyleWithViewController:viewController];
