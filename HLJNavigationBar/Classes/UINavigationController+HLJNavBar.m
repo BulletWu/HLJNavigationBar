@@ -168,6 +168,9 @@ typedef void (^HLJViewControllerWillAppearInjectBlock)(UIViewController *viewCon
     }
     UIColor *toColor = [toVC hlj_navBarBackgroundColor];
     UIColor *fromColor = [fromVC hlj_navBarBackgroundColor];
+    if (fromVC.hlj_prefersNavigationBarHidden) {
+        fromColor = nil;
+    }
     BOOL toHidesBack = [toVC isEqual:[self.viewControllers firstObject]] || toVC.navigationItem.hidesBackButton;
     if (toHidesBack) {
         CGFloat hideBack= 1 - percentComplete;
@@ -183,12 +186,18 @@ typedef void (^HLJViewControllerWillAppearInjectBlock)(UIViewController *viewCon
     }
     
     UIColor *fromVCTintColor = [fromVC hlj_barButtonItemTintColor];
+    if (fromVC.hlj_prefersNavigationBarHidden) {
+        fromVCTintColor = nil;
+    }
     UIColor *toVCTintColor = [toVC hlj_barButtonItemTintColor];
     if (!CGColorEqualToColor(fromVCTintColor.CGColor,toVCTintColor.CGColor)) {
         UIColor *mixColor = [UIColor hlj_HLJNavBar_mixColor1:toVCTintColor color2:fromVCTintColor ratio:percentComplete];
         [self setNeedsNavigationItemBarButtonItemStyleWithViewController:fromVC tintColor:mixColor font:[toVC hlj_barButtonItemFont]];
     }
     UIColor *fromVCTitleColor = [fromVC hlj_navBarTitleColor];
+    if (fromVC.hlj_prefersNavigationBarHidden) {
+        fromVCTitleColor = nil;
+    }
     UIColor *toVCTitleColor = [toVC hlj_navBarTitleColor];
     if (!CGColorEqualToColor(fromVCTitleColor.CGColor,toVCTitleColor.CGColor)) {
         UIColor *mixColor = [UIColor hlj_HLJNavBar_mixColor1:toVCTitleColor color2:fromVCTitleColor ratio:percentComplete];
@@ -196,6 +205,7 @@ typedef void (^HLJViewControllerWillAppearInjectBlock)(UIViewController *viewCon
     }
     [self hlj_updateInteractiveTransition:percentComplete];
 }
+
 
 - (BOOL)hlj_respondsToSelector:(SEL)selector {
 
@@ -317,7 +327,6 @@ typedef void (^HLJViewControllerWillAppearInjectBlock)(UIViewController *viewCon
     if([topVC respondsToSelector:@selector(navigationShouldPop)]) {
         shouldPop = [topVC navigationShouldPop];
     }
-
     if (shouldPop) {
         id<UIViewControllerTransitionCoordinator> coor = topVC.transitionCoordinator;
         if (coor && coor.initiallyInteractive) {
@@ -330,15 +339,6 @@ typedef void (^HLJViewControllerWillAppearInjectBlock)(UIViewController *viewCon
             [self popToViewController:popToVC animated:YES];
         }
         return YES;
-    }else{
-        for(UIView *subview in [navigationBar subviews]) {
-            if(0. < subview.alpha && subview.alpha < 1.) {
-                [UIView animateWithDuration:.25 animations:^{
-                    subview.alpha = 1.;
-                }];
-            }
-        }
-        return NO;
     }
     return YES;
 }
@@ -393,7 +393,7 @@ typedef void (^HLJViewControllerWillAppearInjectBlock)(UIViewController *viewCon
     CGFloat alpha = 0.0;
     [color getRed:nil green:nil blue:nil alpha:&alpha];
     if (alpha < 1) {
-         self.navigationBar.translucent = YES;
+        self.navigationBar.translucent = YES;
     }else {
         self.navigationBar.translucent = NO;
     }
