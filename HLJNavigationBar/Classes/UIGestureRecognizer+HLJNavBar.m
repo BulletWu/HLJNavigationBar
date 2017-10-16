@@ -83,11 +83,14 @@ static void ExchangedMethod(SEL originalSelector, SEL swizzledSelector, Class cl
 
 - (BOOL)gestureRecognizerShouldBegin:(UIGestureRecognizer *)gestureRecognizer {
     UIViewController *topViewController = [[self class] getCurrentViewController];
+    if (topViewController.navigationController.viewControllers.count <= 1 || ![topViewController.navigationController.hlj_currentViewController isEqual:topViewController]) {
+        return NO;
+    }
     BOOL shouldPop = YES;
     if([topViewController respondsToSelector:@selector(navigationShouldPop)]) {
         shouldPop = [topViewController navigationShouldPop];
     }
-     shouldPop = shouldPop && [self.hlj_gestureRecognizerDelegate gestureRecognizerShouldBegin:gestureRecognizer];
+    shouldPop = shouldPop && [self.hlj_gestureRecognizerDelegate gestureRecognizerShouldBegin:gestureRecognizer];
     return shouldPop;
 }
 
@@ -135,3 +138,4 @@ static void ExchangedMethod(SEL originalSelector, SEL swizzledSelector, Class cl
 
 
 @end
+

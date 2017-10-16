@@ -14,5 +14,7 @@
 - (void)hlj_setNeedsNavigationBackgroundColor:(UIColor *)color;
 
 @property (nonatomic ,assign) BOOL hlj_viewControllerBasedNavigationBarAppearanceEnabled;
+@property (nonatomic ,weak) UIViewController *hlj_currentViewController;
+
 
 @end

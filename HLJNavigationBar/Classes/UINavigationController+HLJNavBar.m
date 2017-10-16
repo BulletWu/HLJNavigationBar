@@ -315,6 +315,7 @@ typedef void (^HLJViewControllerWillAppearInjectBlock)(UIViewController *viewCon
 }
 
 - (void)navigationController:(UINavigationController *)navigationController didShowViewController:(UIViewController *)viewController animated:(BOOL)animated {
+    self.hlj_currentViewController = viewController;
     if (self.navDelegate && [self.navDelegate respondsToSelector:@selector(navigationController:didShowViewController:animated:)]) {
         [self.navDelegate navigationController:navigationController didShowViewController:viewController animated:animated];
     }
@@ -323,6 +324,9 @@ typedef void (^HLJViewControllerWillAppearInjectBlock)(UIViewController *viewCon
 #pragma mark - private methods
 - (BOOL)hlj_navigationBar:(UINavigationBar *)navigationBar shouldPopItem:(UINavigationItem *)item {
     UIViewController *topVC = self.topViewController;
+    if (self.viewControllers.count != self.navigationBar.items.count) {
+        return YES;
+    }
     BOOL shouldPop = YES;
     if([topVC respondsToSelector:@selector(navigationShouldPop)]) {
         shouldPop = [topVC navigationShouldPop];
@@ -339,6 +343,15 @@ typedef void (^HLJViewControllerWillAppearInjectBlock)(UIViewController *viewCon
             [self popToViewController:popToVC animated:YES];
         }
         return YES;
+    }else{
+        for(UIView *subview in [navigationBar subviews]) {
+            if(0. < subview.alpha && subview.alpha < 1.) {
+                [UIView animateWithDuration:.25 animations:^{
+                    subview.alpha = 1.;
+                }];
+            }
+        }
+        return NO;
     }
     return YES;
 }
@@ -477,6 +490,14 @@ typedef void (^HLJViewControllerWillAppearInjectBlock)(UIViewController *viewCon
 - (void)setHlj_viewControllerBasedNavigationBarAppearanceEnabled:(BOOL)hlj_viewControllerBasedNavigationBarAppearanceEnabled {
     SEL key = @selector(hlj_viewControllerBasedNavigationBarAppearanceEnabled);
     objc_setAssociatedObject(self, key, @(hlj_viewControllerBasedNavigationBarAppearanceEnabled), OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+}
+
+- (UIViewController *)hlj_currentViewController {
+    return objc_getAssociatedObject(self, @selector(hlj_currentViewController));
+}
+
+- (void)setHlj_currentViewController:(UIViewController *)hlj_currentViewController {
+    objc_setAssociatedObject(self, @selector(hlj_currentViewController), hlj_currentViewController, OBJC_ASSOCIATION_ASSIGN);
 }
 
 @end
